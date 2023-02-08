@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>This Week's Readings</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html">Zane Hassoun</a></h1>
+
+					<!-- Nav -->
+					<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li class = "current"> <a href="02_03_23.html">Recent Writing</a> </li>
+							<li><a href="about-me.html">About Me</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</nav>
+					
+				</section>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+
+						<!-- Content -->
+							<article class="box post">
+								<!-- <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a> -->
+								<header>
+									<h2>What I Read 02-23-2023</h2>
+								</header>
+								<header>	
+								<h3>Hidden Markov Models in Election Polling.</h3>
+									
+							</header>
+							<p, style="color:grey; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Bias and Excess Variance in Election Polling:</p>
+									<p>
+									<ol style="color:black; font-family: 'Times New Roman', Times, serif;">	
+										<li>Overview</li>
+										<ul>
+										<li>Interested in Polling Errors </li>
+											<li>
+												
+												The poll errors are extremely time sensitive to the time between the poll and the
+												actual election outcome
+											</li>
+											<li>
+												
+												propose a hidden Markov model to capture time varying preferenes and treat
+												the election results as a peak at the typically hidden process.
+												
+											</li>
+											<li>
+
+												CLAIM: Their solution is much less sensitive to time window, avoids conflating
+												errors, and are interpretable
+												
+											</li>
+											
+											<li>Compare their model to an already established 2018 paper by Shirani-Mehr et
+											all, which is a linear model as well as a simple non-intercept nor time dependent
+											distribution model.
+										</li>
+											<li>
+												MAIN ISSUE: The methods are inconsistent across many inclusion windows, ie
+												if your support is overstated by polls that factor changes over how many days of
+												polling.
+												support overstated = X
+												days polled
+												
+											</li>
+										
+										</ul>
+										<li>	Model Issues</li>
+										<ul>
+										<li>	Mislabel changes in preferences as polling errors with high precision because they
+											dont account for model misspessification [1]</li>
+											<li>Certain implementations also require log & logit transformations which can cause
+											directional error
+											Model Advantages
+											1. Consistency across time windows
+											2. Avoid conflating changes in preferences with polling errors
+											3. Interpretability </li>
+										
+										</ul>
+										<li>	Models </li>
+											<ul>
+												<li>Specification
+												(a) i = poll
+												(b) ri = election
+												(c) yi = Proportion of Sample Intending to Vote Republican out of Republican/Democrat
+												(d) ni = number of two party voters
+												(e) vri = Republican portion of the two party vote
+												(f) ASSUME: yi ∼ N (pi, σ2
+												i )
+												
+												(g) THE MODELS DIFFER BASED ON HOW pi THE TRUE UNDERLYING
+												PREFERENCE IN Poll i IS DECOMPOSED
+											</li>
+												<li>M1: Static Model considering
+												(a) pi := vri + αri
+												(b) yi − vri ∼ N (αri, σ2
+												i )
+												(c) This is assuming the electorates preferences don’t change over time and the
+												error, αri is time-invariant election specific error. This also means you just
+												have to take a poll very close.
+											</li>
+											<li>
+
+											M2: A Linear Model
+												(a) logit(pi) = logit(vri) + αri + βriti
+												(b) This error is now defined as the sum of the time-invariant erorr plus the linear
+												model error.
+											</li>
+											<li>	Random Walk Model
+												<ul> <li>Specification</li>
+													<ol>
+
+														<li>
+															The proposed model sets
+															pi = θri,ti + αri
+															, where θrt represents the electorates preferences at timepoint t, and evolves via a
+															reverse random walk process ie not from 0 →T but instead T →0.
+															θr,t+1 ∼ N (θr,t, γ2
+															t )
+															Therefore, the election results reveal θr0 := vr
+															<li>Formal State </li>
+															<li>yi ∼ N (pi, pi(1 − pi)
+																ni
+																+ τ 2
+																ri )
+																pi = min(max(0, (θri + αri ))
+																θr,t+1 ∼ N (θr,t, γ2
+																t )
+																θr0 := vr</li>
+																<li>The τr is the election specific variance above random sampling. γr is the measure of
+														how the electorates preferences can change from day to day. We assume that 95%
+														of daily shifts will be within plus or minus 2γr. αr directly measures poll biases.
+														Th operator in pi ensure that we lie within 0,1.</li>
+														<li>The election specific scalar parameters τr, αrγr have hierarchical normal or half
+														normal priors placed to borrow strength across elections.</li>
+														<li>τr ∼ N+(0, σ2
+															τ )
+														2
+														αr ∼ N (μα, σ2
+														α)
+														γr ∼ N (0, σ2
+														γ )</li>
+														<li>Weakly informative priors are placed on the hyper parameters. The model was
+														estimated using STAN and Hamiltonian Monte Carlo.
+														Estimation</li>
+														With a normal prior for αr it obtained:
+														αr|yi, τr, γr ∼ N
+														
+														wi(yi − vr) + (1 − wi)μα, λ−1
+														i
+														
+														λi = (τ 2 + tiγ2
+														r )−1 + σ−2
+														α
+														wi = (τ 2 + tiγ2
+														r )−1
+														λi
+														effectively, the model obtains a weight given to the observed error and a 1-w weight
+														to the prior mean. A poll farther will have less weight than one closer to the elction.
+													</ol>
+														
+													</li>
+												</ul>
+												
+																							</li>
+											</ul>
+										</ul>
+											<li>Summary</li>
+											This model better captured turbulent election cycles, and has better interpretable results
+											based on the weights. It also measures the errors that are robust to selective inclusion
+											about how many to include
+										</ul>
+										</ol>
+									</p>
+							<p style= "color:grey; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+							Hawkes Processes
+							</p>
+							<p style = "color: black; font-family: 'Times New Roman', Times, serif;">
+								<ul style="color:black; font-family:'Times New Roman', Times, serif">
+									<li>Stochastic Processes which are point processes</li>
+									<li> 
+										wy does this go that
+									</li>
+																	</ul>
+							</p>
+								
+
+							</article>
+
+					</div>
+				</section>
+
+						<!-- Footer -->
+						<section id="footer">
+							<div class="container">
+								<div class="row">
+									<div class="col-8 col-12-medium">
+										<section>
+											<header>
+												<h2>Join the mailing list</h2>
+												<p>I write a newsletter on silly stuff</p>
+											</header>
+											 <div class="container">
+												<form  action="https://formspree.io/f/mjvdgrwz"
+												method="POST">
+		
+													<label for="fname" style="color:white">First Name</label>
+													<input type="text" id="fname" name="firstname" placeholder="Your name..">
+		
+													<label for="lname" style="color:white">Last Name</label>
+													<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+		
+													<label for="email" style="color:white">Email</label>
+													<input type="text" id="lname" name="lastname" placeholder="Your Email Address..">
+													</select>
+		
+													<label for="subject" style="color:white">Comments?</label>
+													<textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+		
+													<input type="submit" value="Submit" style="margin-top: 1em;">
+												</form>
+											</div> 
+											
+										</section>
+									</div>
+									
+									<div class="col-4 col-12-medium">
+										<section>
+											<header>
+												<h2>Socials</h2>
+											</header>
+											<ul class="social">
+												<li><a class="icon brands fa-facebook-f" onclick="openInNewTab('//www.corndog.io');"><span class="label">Facebook</span></a></li>
+												<li><a class="icon brands fa-twitter" onclick="openInNewTab('//www.corndog.io');"><span class="label">Twitter</span></a></li>
+												<li><a class="icon brands fa-github" onclick="openInNewTab('//www.github.com/zaneh12');"><span class="label">Dribbble</span></a></li>
+												<li><a class="icon brands fa-linkedin-in" onclick="openInNewTab('//www.linkedin.com/in/zanehassoun/');"><span class="label">LinkedIn</span></a></li>
+											</ul>
+											<ul class="contact">
+												<li>
+													<h3>Address</h3>
+													<p>
+														University of York <br />
+														Dept of Mathematics <br />
+														James College, Campus West <br />
+														YO10 5DD<br/>
+														United Kingdom
+													</p>
+												</li>
+												<li>
+													<h3>Email</h3>
+													<p><a href="#">firstname.lastname@york.ac.uk</a></p>
+												</li>
+												<li>
+													<h3>Phone</h3>
+													<p>Seems a bit personal dunnit?</p>
+												</li>
+											</ul>
+										</section>
+									</div>
+									<div class="col-12">
+		
+										<!-- Copyright -->
+											<div id="copyright">
+												<ul class="links">
+													<li>&copy; Zane Hassoun. All rights reserved.</li>
+												</ul>
+											</div>
+		
+									</div>
+								</div>
+							</div>
+						</section>
+		
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
