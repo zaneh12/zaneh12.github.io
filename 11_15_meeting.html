@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Decay</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        body {
+            text-align: center;
+        }
+        #image-section {
+            background-color: black; /* Black background color */
+            padding: 100px; /* Add padding for the border */
+        }
+        #image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: none;
+        }
+        #next-button {
+            margin-top: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="no-sidebar is-preload">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <section id="header">
+            <!-- Logo -->
+            <h1><a href="index.html">Zane Hassoun</a></h1>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><a href="01_29_23.html">Meeting Plots</a></li>
+                    <li><a href="about-me.html">About Me</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section id="image-section"> <!-- Added a wrapping div with black background -->
+            
+            <div id="image-container">
+                <button id="next-button">Next</button>
+                <img src="Decay_Frames/Airships_by_2019.png" alt="Image 1">
+                <img src="Decay_Frames/Artificial_pancreas_goes_mainstream_in_2017.png" alt="Image 1">
+                <img src="Decay_Frames/At_last__Clinical_trials_of_a_vaccine_for_the_common_cold.png" alt="Image 1">
+                <img src="Decay_Frames/By_the_end_of_2017_will_a_gene_drive_targeting_malaria_be_initiated.png" alt="Image 1">
+                <img src="Decay_Frames/Evidence_for_deviations_from_canonical_black_holes_from_LIGO.png" alt="Image 1">
+                <img src="Decay_Frames/How_will_recent_claims_of_234_SETI_signals_in_SDSS_data_be_treated_by_the_community.png" alt="Image 1">
+                <img src="Decay_Frames/New_ultrasound_Alzheimer_s_treatment_to_clinical_trial_in_humans_by_end_of_2017.png" alt="Image 1">
+                <img src="Decay_Frames/Will_a_small_Turing_machine_(__100_states)_be_found_with_behavior_that_cannot_be_characterized_by_mathematical_proof.png" alt="Image 1">
+                <img src="Decay_Frames/Will_a_successful_proof_of_concept_for_a_hyperloop_be_demonstrated_by_mid_2017.png" alt="Image 1">
+                <img src="Decay_Frames/World_population_forecast_to_peak_before_2100.png"alt="Image 1">
+                <img src="Decay_Frames/Winner_in_2017_of_the_Lunar_X_prize.png" alt="Image 1">
+                <img src="Decay_Frames/Will_there_be_a_Game_of_Thrones_episode_airing_in_2017__in_which_Jon_Snow_bends_the_knee_to_Daenerys_Targaryen.png" alt="Image 1">
+                <img src="Decay_Frames/Will_Theranos_get_more_than_100_FDA_approvals_for_blood_tests_by_the_end_of_2018.png" alt="Image 1">
+
+            </div>
+           
+        </div>
+    </section>
+
+    <script>
+        const images = document.querySelectorAll('img');
+        const nextButton = document.getElementById('next-button');
+        let currentIndex = 0;
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                if (i === index) {
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
+            });
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        });
+
+        // Show the first image initially
+        showImage(currentIndex);
+    </script>
+		<!-- Footer -->
+        <section id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 col-12-medium">
+                        <section>
+                            <header>
+                                <h2>Join the mailing list</h2>
+                                <p>Newsletter?</p>
+                            </header>
+                             <div class="container">
+                                <form  action="https://formspree.io/f/mjvdgrwz"
+                                method="POST">
+
+                                    <label for="fname" style="color:white">First Name</label>
+                                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+                                    <label for="lname" style="color:white">Last Name</label>
+                                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+                                    <label for="email" style="color:white">Email</label>
+                                    <input type="text" id="lname" name="lastname" placeholder="Your Email Address..">
+                                    </select>
+
+                                    <label for="subject" style="color:white">Comments?</label>
+                                    <textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+
+                                    <input type="submit" value="Submit" style="margin-top: 1em;">
+                                </form>
+                            </div> 
+                            
+                        </section>
+                    </div>
+                    
+                    <div class="col-4 col-12-medium">
+                        <section>
+                            <header>
+                                <h2>Socials</h2>
+                            </header>
+                            <ul class="social">
+                                <li><a class="icon brands fa-facebook-f" onclick="openInNewTab('//www.corndog.io');"><span class="label">Facebook</span></a></li>
+                                <li><a class="icon brands fa-twitter" onclick="openInNewTab('//www.corndog.io');"><span class="label">Twitter</span></a></li>
+                                <li><a class="icon brands fa-github" onclick="openInNewTab('//www.github.com/zaneh12');"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon brands fa-linkedin-in" onclick="openInNewTab('//www.linkedin.com/in/zanehassoun/');"><span class="label">LinkedIn</span></a></li>
+                            </ul>
+                            <ul class="contact">
+                                <li>
+                                    <h3>Address</h3>
+                                    <p>
+                                        University of York <br />
+                                        Dept of Mathematics <br />
+                                        James College, Campus West <br />
+                                        YO10 5DD<br/>
+                                        United Kingdom
+                                    </p>
+                                </li>
+                                <li>
+                                    <h3>Email</h3>
+                                    <p><a href="#">firstname.lastname@york.ac.uk</a></p>
+                                </li>
+                                <li>
+                                    <h3>Phone</h3>
+                                    <p>Seems a bit personal dunnit?</p>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="col-12">
+
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul class="links">
+                                    <li>&copy; Zane Hassoun. All rights reserved.</li>
+                                </ul>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
