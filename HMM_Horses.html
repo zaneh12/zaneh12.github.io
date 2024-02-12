@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Betfair Horse Data</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <style>
+        body {
+            text-align: center;
+        }
+        #image-section {
+            background-color: black; /* Black background color */
+            padding: 100px; /* Add padding for the border */
+        }
+        #image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        img {
+        max-width: 100%;
+        max-height: 80vh; /* Limit the height to 80% of the viewport height */
+        height: auto;
+        display: none;
+        transition: transform .5s ease-in-out; /* Smooth transition for zooming */
+    }
+        #next-button,
+        #back-button { /* Added back button styling */
+            margin-top: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="no-sidebar is-preload">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <section id="header">
+            <!-- Logo -->
+            <h1><a href="index.html">Zane Hassoun</a></h1>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><a href="01_29_23.html">Meeting Plots</a></li>
+                    <li><a href="about-me.html">About Me</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </section>
+        <body>
+
+            <div style="margin: 0 auto; width: 60%;">
+
+                <section style="background-color: white; padding: 20px; color: black">
+        
+                    <h2>Hidden Markov Model (HMM)</h2>
+
+                    <p>The Hidden Markov Model is a probabilistic model that deals with sequences of observable events and their underlying hidden states.</p>
+    
+                    <p>Mathematically, it can be represented as follows:</p>
+    
+                    <blockquote>
+                        <p>Given a sequence of observations \( O = o_1, o_2, ..., o_T \), and a sequence of hidden states \( S = s_1, s_2, ..., s_T \), the joint probability of the observed sequence and the hidden states is given by:</p>
+    
+                        <p>\[ P(O, S | \lambda) = P(s_1 | \pi) \times \prod_{t=2}^{T} P(s_t | s_{t-1}, A) \times \prod_{t=1}^{T} P(o_t | s_t, B) \]</p>
+    
+                        <p>Where:</p>
+    
+                        <ul>
+                            <li>\( \lambda \) represents the parameters of the model (initial state probabilities \( \pi \), state transition probabilities \( A \), and observation probabilities \( B \)).</li>
+                            <li>\( P(s_t | s_{t-1}, A) \) is the probability of transitioning from state \( s_{t-1} \) to state \( s_t \).</li>
+                            <li>\( P(o_t | s_t, B) \) is the probability of observing \( o_t \) given the current state \( s_t \).</li>
+                        </ul>
+                    </blockquote>
+    
+                    <h2>K Nearest Neighbors (KNN) Model</h2>
+    
+                    <p>The K Nearest Neighbors model is a non-parametric, lazy learning algorithm used for classification and regression. It classifies a data point based on the majority class among its \( k \) nearest neighbors in the feature space.</p>
+    
+                    <p>Mathematically, the prediction of a new data point \( x \) can be represented as follows:</p>
+    
+                    <blockquote>
+                        <p>Given a set of training data \( D = \{(x_1, y_1), (x_2, y_2), ..., (x_N, y_N)\} \), where \( x_i \) represents the feature vector and \( y_i \) represents the class label, the predicted class label for a new data point \( x \) is determined by a majority vote among its \( k \) nearest neighbors in the feature space.</p>
+                    </blockquote>
+    
+                    <h2>Ensembling HMM and KNN</h2>
+    
+                    <p>To ensemble the Hidden Markov Model and the K Nearest Neighbors model, one possible approach is to use the output probabilities or predictions from each model as features for a higher-level classifier, such as logistic regression or a neural network. This higher-level classifier then combines the outputs of the individual models to make a final prediction.</p>
+    
+                    <p>Mathematically, the ensemble prediction can be represented as follows:</p>
+    
+                    <blockquote>
+                        <p>Given the output probabilities \( P_{HMM}(S|O) \) from the HMM and the predictions \( \hat{y}_{KNN} \) from the KNN model, a higher-level classifier can be trained to learn a weighted combination of these outputs to make the final prediction.</p>
+                    </blockquote>
+    
+                            
+    
+                <h1>Back-to-Lay Horse Betting Strategy</h1>
+
+                <table>
+                    <caption>Sample Numbers</caption>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Initial Back Odds</td>
+                        <td>10.00</td>
+                    </tr>
+                    <tr>
+                        <td>Initial Lay Odds</td>
+                        <td>5.00</td>
+                    </tr>
+                    <tr>
+                        <td>Stake</td>
+                        <td>$100</td>
+                    </tr>
+                </table>
+
+                <p>Here's how the strategy works:</p>
+
+                <ol>
+                    <li>Initially, we back the horse "Speedy" with $100 at odds of 10.00, risking $100 for a potential profit of $900 if the horse wins.</li>
+                    <li>Then, if the odds on the exchange shorten (decrease), say to 4.00, we can place a lay bet at those lower odds.</li>
+                    <li>Let's calculate our potential profit/loss at different scenarios:</li>
+                </ol>
+
+                <h2>Scenario 1: Horse Wins</h2>
+
+                <table>
+                    <caption>Profit Calculation (Horse Wins)</caption>
+                    <tr>
+                        <th>Event</th>
+                        <th>Stake</th>
+                        <th>Odds</th>
+                        <th>Profit</th>
+                    </tr>
+                    <tr>
+                        <td>Back Bet</td>
+                        <td>$100</td>
+                        <td>10.00</td>
+                        <td>$900</td>
+                    </tr>
+                    <tr>
+                        <td>Lay Bet</td>
+                        <td>$100</td>
+                        <td>4.00</td>
+                        <td>-$300</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Total Profit</td>
+                        <td>$600</td>
+                    </tr>
+                </table>
+
+                <h2>Scenario 2: Horse Loses</h2>
+
+                <table>
+                    <caption>Profit Calculation (Horse Loses)</caption>
+                    <tr>
+                        <th>Event</th>
+                        <th>Stake</th>
+                        <th>Odds</th>
+                        <th>Profit</th>
+                    </tr>
+                    <tr>
+                        <td>Back Bet</td>
+                        <td>$100</td>
+                        <td>10.00</td>
+                        <td>-$100</td>
+                    </tr>
+                    <tr>
+                        <td>Lay Bet</td>
+                        <td>$100</td>
+                        <td>4.00</td>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Total Profit</td>
+                        <td>$0</td>
+                    </tr>
+                </table>
+
+                <p>This demonstrates the potential outcomes of a back-to-lay betting strategy.</p>
+                
+                </section>
+        
+            </div>
+        
+        </body>
+        <section id="image-section"> <!-- Added a wrapping div with black background -->
+            
+            <div id="image-container">
+                <button id="next-button">Next</button>
+                <button id="back-button">Back</button> <!-- Added back button -->
+                 <!-- Inserting three PNG images -->
+                 <img src="images/Back_Lay.png" alt="Image 1">
+                 <img src="images/odss_ex.png" alt="Image 1">
+                 <img src="images/horse_data.png" alt="Image 1">
+                 
+            </div>
+        </section>
+       
+    </div>
+    
+    
+
+    <script>
+        const images = document.querySelectorAll('img');
+        const nextButton = document.getElementById('next-button');
+        const backButton = document.getElementById('back-button'); // Added back button
+        let currentIndex = 0;
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                if (i === index) {
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
+            });
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        });
+        backButton.addEventListener('click', () => { // Added back button functionality
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        });
+        // Enable zooming on click
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                img.style.transform = (img.style.transform === 'scale(1)') ? 'scale(1.8)' : 'scale(1)';
+            });
+        });
+
+        // Show the first image initially
+        showImage(currentIndex);
+    </script>
+		<!-- Footer -->
+        <section id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 col-12-medium">
+                        <section>
+                            <header>
+                                <h2>Join the mailing list</h2>
+                                <p>Newsletter?</p>
+                            </header>
+                             <div class="container">
+                                <form  action="https://formspree.io/f/mjvdgrwz"
+                                method="POST">
+
+                                    <label for="fname" style="color:white">First Name</label>
+                                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+                                    <label for="lname" style="color:white">Last Name</label>
+                                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+                                    <label for="email" style="color:white">Email</label>
+                                    <input type="text" id="lname" name="lastname" placeholder="Your Email Address..">
+                                    </select>
+
+                                    <label for="subject" style="color:white">Comments?</label>
+                                    <textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+
+                                    <input type="submit" value="Submit" style="margin-top: 1em;">
+                                </form>
+                            </div> 
+                            
+                        </section>
+                    </div>
+                    
+                    <div class="col-4 col-12-medium">
+                        <section>
+                            <header>
+                                <h2>Socials</h2>
+                            </header>
+                            <ul class="social">
+                                <li><a class="icon brands fa-facebook-f" onclick="openInNewTab('//www.corndog.io');"><span class="label">Facebook</span></a></li>
+                                <li><a class="icon brands fa-twitter" onclick="openInNewTab('//www.corndog.io');"><span class="label">Twitter</span></a></li>
+                                <li><a class="icon brands fa-github" onclick="openInNewTab('//www.github.com/zaneh12');"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon brands fa-linkedin-in" onclick="openInNewTab('//www.linkedin.com/in/zanehassoun/');"><span class="label">LinkedIn</span></a></li>
+                            </ul>
+                            <ul class="contact">
+                                <li>
+                                    <h3>Address</h3>
+                                    <p>
+                                        University of York <br />
+                                        Dept of Mathematics <br />
+                                        James College, Campus West <br />
+                                        YO10 5DD<br/>
+                                        United Kingdom
+                                    </p>
+                                </li>
+                                <li>
+                                    <h3>Email</h3>
+                                    <p><a href="#">firstname.lastname@york.ac.uk</a></p>
+                                </li>
+                                <li>
+                                    <h3>Phone</h3>
+                                    <p>+44-44444-44444</p>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="col-12">
+
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul class="links">
+                                    <li>&copy; Zane Hassoun. All rights reserved.</li>
+                                </ul>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
