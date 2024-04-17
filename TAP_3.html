@@ -1,0 +1,433 @@
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+		<head>
+			<title>TAP Meeting April 19th 2024</title>
+			<meta charset="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+			<link rel="stylesheet" href="assets/css/main.css" />
+            <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+            <style>
+                .image-container {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 20px;
+                    margin-left: 100px;
+                    margin-right: 100px; /* Optional: Adjust the top margin */
+                }
+        .pdf-container {
+            width: 100%;
+            height: 80vh; 
+            position: relative;
+        }
+        .pdf-page {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .pdf-page.active {
+            display: block;
+        }
+        .pdf-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pdf-controls button {
+            margin: 0 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+		</head>
+		<body class="no-sidebar is-preload">
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<section id="header">
+
+						<!-- Logo -->
+							<h1><a href="index.html">Zane Hassoun</a></h1>
+
+						<!-- Nav -->
+						<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li class = "current"> <a href="01_29_23.html">TAP 3 Meeting</a> </li>
+								<li><a href="about-me.html">About Me</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</nav>
+						
+					</section>
+
+			<!-- Main -->
+				<section id="main">
+                    
+					<div id = 'container' >
+
+						<!-- Content -->
+                        <body style="font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 20px;">
+
+                            <section style="max-width: 2000px; margin: 0 auto; background-color: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                <h2 style="text-align: center; color: black; margin-bottom: 30px; font-size: 3em;">TAP Meeting April 19th, 2024</h2>
+								<div class="project" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); margin-bottom: 20px;"></div>
+								<ol style="list-style-type: lower-roman; font-size: 2em; color: black;">
+								
+									<li>
+                                        
+                                            <h3 style="color: black; font-weight: bold; margin-bottom: 30px; font-size: 1.5em; padding: 5px; line-height:1.5">Overview</h3>
+											
+											<ul>
+												<li>
+													Probability Forecasting of Time-Critical Events
+												</li>
+												<li>
+													Specific focus on time-dependent and time-varying data 
+												</li>
+												<li>
+													Looking to construct methods to identify and modify predictions based on these unobserved changes in information in geopolitics and forecasting competitions and changes in strategy or gameflow when considering sport
+												</li>
+											</ul>		
+										
+
+								
+								
+								</ol>
+                                <ol style="list-style-type: lower-roman; font-size: 2em; color: black;">
+                                    <li>
+                                        <div class="project" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                                            <h3 style="color: black; font-weight: bold; margin-bottom: 30px; font-size: 1.5em; padding: 5px; line-height:1.5">Project 1: A method for dynamical probability
+                                                forecast aggregation informed by Bayesian
+                                                change point detection</h3>
+                                                <ol style="list-style-type: upper-roman; font-size: 1em; color: black;line-height: 1.5; margin-bottom: 40px; line-height: 1.5;">
+                                                    <li style = "margin-bottom: 40px;">
+														<div class="image-container">
+																<video width="1800" height="720" controls>
+																	<source src="basic_animation.mp4" type="video/mp4">
+																	Your browser does not support the video tag.
+																</video>
+														</div>
+													</li>
+													
+													<li style = 'margin-bottom: 100px;'>Method begins by constructing for all points in time a posterior probability that this point partitions the forecasts into two sets which are distributed differently. The posterior probabilities are then integrated to give a cumulative mass function from which a weighted median forecast is calculated.
+															<ol>
+																<li style = 'margin-bottom: 100px;'>
+																	<div class="mathjax">
+																	\begin{equation}
+																	\label{bayestheorem1}
+																	P(t^*=t|\text{Forecasts}) = \frac{{P(\text{Forecasts}|t^*=t)}{P(t^*=t)}}{P(\text{Forecasts})}
+																	\end{equation}
+																	</div>
+																</li>
+																<div style="text-align: center;">
+																	<img src="intution_1.png" alt="Image Description">
+																</div>
+																
+																<li>
+																	<ul>
+																		<li>
+																			We begin with, as our parameter of interest, the location \(t^*\) (in forecaster time) of a single possible change point at some previous date (\( \text{an integer } i \in \{1,\ldots,N\}\) labelling one of the ordered forecasts). 
+																		</li>
+																		<li>
+																			In the absence of evidence to the contrary, we assume a constant probability \( p \in [0,1] \)that at least one change point-inducing event occurs between forecasts.
+																		</li>
+																		<li>
+																			
+																			This motivates a geometric prior distribution on the time of the last change point, \( P(t^*=t) \propto (1-p)^{N-t} \)
+																			, which follows from the idea that for (\ t \) to have been the last change point there must have been \(N-t\) following inter-forecast periods without a subsequent change point.
+																		</li>
+																	</ul>																
+																</li>
+
+																<li>
+																	<ul>
+																		<li>
+																			Inspired by work on Bayesian hypothesis testing by Holmes, we make significant use of the compound Dirichlet-categorical distribution to describe the number of forecasts falling in different sub-intervals, or bins, of \([0,1]\). We use the probabilities this distribution assigns to the observed bin-counts to inform the quantity \(P(\text{Forecasts}|t^*=t)\) 
+																		</li>
+																		<li>
+																			The Dirichlet-categorical distribution, whose flexibility and tractability have made it popular amongst Bayesian statisticians, can be motivated by considering a two-stage data-generating process. In the first stage bin probabilities are drawn from a Dirichlet distribution and in the second stage bin-memberships are assigned to each of a given number of forecasts.
+																		</li>
+																		<li> 
+																			The mass function for the Dirichlet-categorical distribution describes the marginal probabilities for the bin counts arising from such a process. Mathematically, this mass function can be arrived at by computing a weighted average of mass functions for categorical distributions, where the average is taken over a (Dirichlet) distribution of (unobserved) bin probabilities. The Dirichlet-categorical distribution assigns probability mass
+																		</li>	
+																	</ul> 
+
+
+																	 
+																</li>
+																<li>
+																	<div class = "mathjax">
+																		\begin{equation}\label{DCmassfun}
+																		P(n_1,\ldots,n_K)=\frac{\Gamma(\sum \alpha_k)}{\Gamma(\sum n_k+\alpha_k)}\prod_{k=1}^{K}\frac{\Gamma(n_k+\alpha_k)}{\Gamma(\alpha_k)}
+																		\end{equation}
+																	</div>
+																</li>
+																<li>
+																	<div class = "mathjax">
+																		\begin{equation}
+																		\lim_{n_1,..,n_K \rightarrow \infty} \log P(n_1,\ldots,n_K) = N \sum_{k=1}^{K} \frac{n_k}{N} \log \left( \frac{n_k}{N} \right)
+																		\end{equation}
+																	</div>
+																</li>
+																<div style="text-align: center;">
+
+																<img src="grayscale_rectangles_lines(1).png"></img>
+																</div>
+																
+																<li>
+																	<div class = "mathjax">
+																		\begin{align}
+																		P(t^*=t|\text{Forecasts}) 
+																		\propto& {P(\text{Forecasts}|t^*=t)}{P(t^*=t)} \notag \\
+																		=&\frac{\Gamma(\sum \alpha_k)}{\Gamma(\sum n_k+\alpha_k)}\prod_{k=1}^{K}\frac{\Gamma(n_k+\alpha_k)}{\Gamma(\alpha_k)}  \notag \\
+																		& \times \frac{\Gamma(\sum \alpha_k')}{\Gamma(\sum n_k'+\alpha_k')}\prod_{k=1}^{K}\frac{\Gamma(n_k'+\alpha_k')}{\Gamma(\alpha_k')} \notag \\
+																		& \times (1-p)^{N-t} \label{bayestheorem2}
+																		\end{align}																	</div>
+																</li>
+																<div style="text-align: center;">
+																	<div style="display: inline-block; margin-right: 20px;">
+																		<!-- Subfigure 1 -->
+																		<img src="PMF_Trump_Single.png" alt="Subfigure 1">
+																		<!-- <p>Caption for Subfigure 1</p> -->
+																	</div>
+																	<div style="display: inline-block;">
+																		<!-- Subfigure 2 -->
+																		<img src="CMF_Trump_Single.png" alt="Subfigure 2">
+																		<!-- <p>Caption for Subfigure 2</p> -->
+																	</div>
+																</div>
+																<li>
+																	We then evaluate  for every candidate change point \(t=1,\ldots,N\), taking us from calendar time 17 May 2017 to 10 Oct 2017 in our example. With each evaluation, we are asking the question ``What is the probability that this set of forecasts is actually drawn from two different distributions, one before and another after our candidate \(t\)?" A visualisation of a single step in the process is shown in Figure where the two periods are highlighted with pink and blue shading, respectively. Having computed for each time point, we can normalize it to derive our posterior mass function for the location of the change point. The corresponding CMF then provides weights for our aggregated forecast.
+
+																</li>
+																
+																<div style="text-align: center;">
+																	<img src="results.png" alt="Image Description">
+																</div>
+															</ol>
+														
+													</li>
+                                                    <!-- <li> Our method begins by constructing for all points in time a posterior probability that this point partitions the forecasts into two sets which are distributed differently. </li>
+                                                    <li>
+                                                        The posterior probabilities are then integrated to give a cumulative mass function from which a weighted median forecast is calculated. 
+                                                    </li>
+                                                    <li>
+                                                        Outperforms standard methods, and is especially suitable for geopolitical forecasting tournaments because it is observed to be robust across disparate questions and forecaster distributions.
+                                                    </li>
+                                                    <li>
+                                                        
+                                                    </li> -->
+
+                                                </ol>
+                                                    
+                                        </div>
+                                    </li>
+                                    <!-- <section class="pdf-slideshow">
+                                        <div class="pdf-container">
+                                            <embed class="pdf-page" src="TAP_3_ZH.pdf" type="application/pdf">
+                                            <embed class="pdf-page active" src="TAP_3_ZH.pdf" type="application/pdf">
+                                           
+                                        </div>
+                                        <div class="pdf-controls">
+                                            <button onclick="prevSlide()">Previous</button>
+                                            <button onclick="nextSlide()">Next</button>
+                                        </div>
+                                    </section>
+                                    
+                                    <script>
+                                        let currentSlide = 0;
+                                        const slides = document.querySelectorAll('.pdf-page');
+                                    
+                                        function showSlide(index) {
+                                            slides.forEach((slide, i) => {
+                                                if (i === index) {
+                                                    slide.classList.add('active');
+                                                } else {
+                                                    slide.classList.remove('active');
+                                                }
+                                            });
+                                            currentSlide = index;
+                                        }
+                                    
+                                        function nextSlide() {
+                                            currentSlide = (currentSlide + 1) % slides.length;
+                                            showSlide(currentSlide);
+                                        }
+                                    
+                                        function prevSlide() {
+                                            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                                            showSlide(currentSlide);
+                                        }
+                                    </script>
+                                    
+                                    <div class="image-container">
+                                        <img src="images/animation.gif" alt="Animation">
+                                    </div> -->
+                                    <li>
+                                        <div class="project" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                                            <h3 style="color: black; font-weight: bold; margin-bottom: 10px; font-size: 2em; padding: 40px; line-height: 1.5;">Project 2: Markov Decision Processes in Football Matches</h3>
+											<ol style="list-style-type: upper-alpha; font-size: 1em; color: black;line-height: 1.5; margin-bottom: 40px; line-height: 1.5;">
+												<li style = "margin-bottom: 40px; font-size: 1em">
+													<ul>
+														<li>
+															<p>Nobuyoshi Hirotsu, Yuki Masui, Yu Shimasaki, Masafumi Yoshimura, Modelling tactical changes in association football using a Markov game, IMA Journal of Management Mathematics, 2024;, dpae002, https://doi.org/10.1093/imaman/dpae002</p>
+														</li>
+														<div style="text-align: center;">
+															<img src="extransition.png" alt="Image Description">
+														</div>
+
+														<li>
+															<p>Proposing using data from <a href = 'www.statsbomb.com'> Stats Bomb</a> of the UK Womens Super League where we have access to over 300 matches with almost 500,000 unique events</p>
+														</li>	
+														
+														<style>
+															.rotate180 {
+																transform: rotate(270deg);
+															}
+														</style>
+														<figure style="text-align: center; margin-top: 200px; margin-bottom: 150px;">
+														<img src="images/image(1).png" alt="Your Image" class="rotate180">
+														</figure>
+														
+														<div style="text-align: center;">
+															<img src="Transition_Matricies_Chelsea/3775550.png" alt="Image Description">
+														</div>
+														<li>
+															Goal is to take a different approach to the industry leader Opta to calculate expected goals (xG)
+														</li>
+														<p>The model uses several variables from before, and up to, the exact moment the shot was taken. It evaluates how over 20 variables affect the likelihood of a goal being scored. Some of the most important factors are listed below:</p>
+
+														<ul>
+															<li>Distance to the goal.</li>
+															<li>Angle to the goal​.</li>
+															<li>Goalkeeper position, giving us information on the likelihood that they’re able to make a save.</li>
+															<li>The clarity the shooter has of the goal mouth, based on the positions of other players.</li>
+															<li>The amount of pressure they are under from the opposition defenders.</li>
+															<li>Shot type, such as which foot the shooter used or whether it was a volley/header/one-on-one.</li>
+															<li>Pattern of play (e.g., open play, fast break, direct free-kick, corner kick, throw-in etc.).</li>
+															<li>Information on the previous action, such as the type of assist (e.g., through ball, cross etc.).</li>
+														</ul>
+														
+													</ul>
+													
+												</li>
+                                        </div>
+                                    </li>
+                                    <!-- Add more project sections as needed -->
+                                </ol>
+                            
+                                <!-- Add more project sections as needed -->
+                            
+                            </section>
+							</article>
+
+					</div>
+				</section>
+
+						<!-- Footer -->
+						<section id="footer" style="background-color: black;">
+							<div class="container" >
+								<div class="row">
+									<div class="col-8 col-12-medium">
+										<section>
+											<header>
+												<h2>Join the mailing list</h2>
+												<p>_</p>
+											</header>
+											 <div class="container">
+												<form  action="https://formspree.io/f/mjvdgrwz"
+												method="POST">
+		
+													<label for="fname" style="color:white">First Name</label>
+													<input type="text" id="fname" name="firstname" placeholder="Your name..">
+		
+													<label for="lname" style="color:white">Last Name</label>
+													<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+		
+													<label for="email" style="color:white">Email</label>
+													<input type="text" id="lname" name="lastname" placeholder="Your Email Address..">
+													</select>
+		
+													<label for="subject" style="color:white">Comments?</label>
+													<textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+		
+													<input type="submit" value="Submit" style="margin-top: 1em;">
+												</form>
+											</div> 
+											
+										</section>
+									</div>
+									
+									<div class="col-4 col-12-medium">
+										<section>
+											<header>
+												<h2>Socials</h2>
+											</header>
+											<ul class="social">
+												<li><a class="icon brands fa-facebook-f" onclick="openInNewTab('//www.corndog.io');"><span class="label">Facebook</span></a></li>
+												<li><a class="icon brands fa-twitter" onclick="openInNewTab('//www.corndog.io');"><span class="label">Twitter</span></a></li>
+												<li><a class="icon brands fa-github" onclick="openInNewTab('//www.github.com/zaneh12');"><span class="label">Dribbble</span></a></li>
+												<li><a class="icon brands fa-linkedin-in" onclick="openInNewTab('//www.linkedin.com/in/zanehassoun/');"><span class="label">LinkedIn</span></a></li>
+											</ul>
+											<ul class="contact">
+												<li>
+													<h3>Address</h3>
+													<p>
+														University of York <br />
+														Dept of Mathematics <br />
+														James College, Campus West <br />
+														YO10 5DD<br/>
+														United Kingdom
+													</p>
+												</li>
+												<li>
+													<h3>Email</h3>
+													<p><a href="#">firstname.lastname@york.ac.uk</a></p>
+												</li>
+												<li>
+													<h3>Phone</h3>
+													<p>000000000</p>
+												</li>
+											</ul>
+										</section>
+									</div>
+									<div class="col-12">
+		
+										<!-- Copyright -->
+											<div id="copyright">
+												<ul class="links">
+													<li>&copy; Zane Hassoun 2024. All rights reserved.</li>
+												</ul>
+											</div>
+		
+									</div>
+								</div>
+							</div>
+						</section>
+		
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
