@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Sky Team Alliance Project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+
+				<!-- Logo -->
+				<h1><a href="http://www.skyteam.com/" target= "_blank">The Sky Team Alliance</a></h1>
+
+				<!-- Nav -->
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html"target= "_blank">Home</a></li>
+						<li > <a href="02_10_23.html"target= "_blank">Recent Writing</a> </li>
+						<li class = "current"><a href="about-me.html" target= "_blank">About Me</a></li>
+						<li><a href="contact.html" target= "_blank">Contact</a></li>
+					</ul>
+				</nav>
+
+				</section>
+<section id="main">
+    <div class="container">
+
+    <!-- Heading -->
+    <h1>Select an Airline:</h1>
+    
+    <!-- Selection menu -->
+    <div>
+        <label for = 'airlineSelect'>Select an Airline: </label>
+        <select id = 'airlineSelect' onchange="getAirline()">
+        <option value = ''> Select an Airline</option>
+        </select>
+    </div>
+    <!-- Display state -->
+    <div>
+        <label for="airlineDisplay">Joined Sky Team:</label>
+        <span id="airlineDisplay">Choose something</span>
+    </div>    
+</div>
+</section>
+    <!-- JavaScript code -->
+    <script>
+        const skyteam =  `https://awsbucketmap.s3.us-east-2.amazonaws.com/skyteam.csv`;
+
+        fetch(skyteam)
+            .then(response => response.text())
+            .then(data =>{
+                const rows = data.split('\n').slice(1);
+                const airlineSelect = document.getElementById('airlineSelect')
+
+            rows.forEach(row=>{
+                const columns = row.split(',');
+                const airline = columns[0].trim();
+                const founded = columns[1].trim();
+                
+
+                // Create an option for each number in the selection menu
+                const option = document.createElement('option'); // Create <option> element
+                option.value = founded; // Set value of the option to the state
+                option.textContent = airline; // Set text content of the option to the number
+                airlineSelect.appendChild(option); // Append option to the selection menu
+                });
+            })
+            .catch(error => console.error('Error fetching CSV:', error));
+
+        // Function to display the selected state
+        function getAirline() {
+            const airlineSelect = document.getElementById('airlineSelect'); // Reference to the selection menu
+            const airlineDisplay = document.getElementById('airlineDisplay'); // Reference to the state display element
+            const selectedAirline = airlineSelect.value; // Get the selected number from the selection menu
+
+            // Display the selected state
+            if (selectedAirline) {
+                airlineDisplay.textContent = selectedAirline; // Display the selected number as the state
+            } else {
+                airlineDisplay.textContent = 'Choose an Airline!'; // Clear the displayed state if no number is selected
+            }
+        }
+    </script>
+</body>
+</html>
