@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive JSON Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .json-container {
+      font-family: "Courier New", Courier, monospace;
+      background-color: #282c34;
+      color: #61dafb;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: auto;
+    }
+    .key {
+      font-weight: bold;
+      cursor: pointer;
+      color: #ffa500;
+    }
+    .collapsible {
+      margin-left: 20px;
+      display: none;
+    }
+    .open > .collapsible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive JSON Viewer</h1>
+  <div class="json-container" id="json-container"></div>
+
+  <script>
+    const jsonData = {
+      'West Ham': {
+        Back: [
+          [4.4, 0.52],
+          [4.3, 13.3],
+          [4.2, 9.03],
+          [4.1, 79.35],
+          [4, 1112.97],
+        ],
+        Lay: [
+          [3.8, 9],
+          [3.85, 3.95],
+          [3.9, 319.94],
+          [3.95, 33.75],
+          [4, 6.6],
+        ],
+      },
+      Liverpool: {
+        Back: [
+          [2.2, 22.79],
+          [2.18, 13.67],
+          [2.16, 0.9],
+          [2.14, 368.98],
+          [2.12, 0.77],
+        ],
+        Lay: [
+          [2.02, 44.55],
+          [2.04, 61.98],
+          [2.06, 234.65],
+          [2.08, 959.43],
+          [2.1, 851.32],
+        ],
+      },
+      'The Draw': {
+        Back: [
+          [3.7, 25.12],
+          [3.65, 37.08],
+          [3.6, 3.88],
+          [3.55, 4596.37],
+          [3.5, 5405.77],
+        ],
+        Lay: [
+          [3.6, 325.14],
+          [3.65, 3691.48],
+          [3.7, 4248.38],
+          [3.75, 3953.88],
+          [3.8, 5894.82],
+        ],
+      },
+    };
+
+    const container = document.getElementById('json-container');
+
+    function createCollapsibleElement(key, value) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'json-item';
+
+      if (typeof value === 'object' && value !== null) {
+        const keyElement = document.createElement('div');
+        keyElement.className = 'key';
+        keyElement.textContent = `${key}: {`;
+        keyElement.onclick = () => {
+          wrapper.classList.toggle('open');
+        };
+
+        const collapsible = document.createElement('div');
+        collapsible.className = 'collapsible';
+        for (const subKey in value) {
+          collapsible.appendChild(createCollapsibleElement(subKey, value[subKey]));
+        }
+
+        const closingBrace = document.createElement('div');
+        closingBrace.textContent = '}';
+
+        wrapper.appendChild(keyElement);
+        wrapper.appendChild(collapsible);
+        wrapper.appendChild(closingBrace);
+      } else {
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `<span class="key">${key}:</span> ${JSON.stringify(value)}`;
+        wrapper.appendChild(itemElement);
+      }
+
+      return wrapper;
+    }
+
+    function renderJSON(json, container) {
+      for (const key in json) {
+        container.appendChild(createCollapsibleElement(key, json[key]));
+      }
+    }
+
+    renderJSON(jsonData, container);
+  </script>
+</body>
+</html>
