@@ -25,7 +25,7 @@
 					<nav id="nav">
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li class = "current"> <a href="what-i-read.html">Recent Writing</a> </li>
+							<li class = "current"> <a href="projects.html">Recent Writing</a> </li>
 							<li><a href="about-me.html">About Me</a></li>
 							<li><a href="contact.html">Contact</a></li>
 						</ul>
@@ -40,45 +40,33 @@
         <!-- Content -->
         <article class="box post" style="color: black;">
             <header>
-                <h2 style="color: black;">What I Read This Week</h2>
+                <h2 style="color: black;">Investment Lessons from Watching Hockey</h2>
             </header>
-            <header>
-                <h3 style="color: black;">Some Notes on LSTMs</h3>
-            </header>
-            
-            <p style="color: black;">
-                I spent a few hours this week getting a better understanding of Long Short-Term Memory (LSTM) networks. 
-                They're an older neural net architecture by deep learning standards, but still useful, especially for sequential data like time series or text. 
-                I wanted to get a clearer sense of why they’re still in use despite the attention newer models (like transformers) get.
-            </p>
+					<p style="color: black; font-size: 25px; font-family:'Times New Roman', Times, serif;">
+						This week I read a short paper by Cliff Asness and Aaron Brown: 
+						<a href="https://www.researchgate.net/profile/Aaron-Brown-64/publication/332141407_INVITED_EDITORIAL_COMMENT_Pulling_the_Goalie_Investment_Lessons_from_Watching_Hockey/links/63f9174557495059453ea160/INVITED-EDITORIAL-COMMENT-Pulling-the-Goalie-Investment-Lessons-from-Watching-Hockey.pdf" target="_blank">
+						Pulling the Goalie: Investment Lessons from Watching Hockey</a>. 
+						It’s short and punchy, but I think it hits something important that shows up all the time in real decision-making, in markets, management, even job searching.
+					</p>
+					<p style="color: black; font-size: 25px; font-family:'Times New Roman', Times, serif;">
+						The basic idea is simple: when a hockey team is down by one, it should pull the goalie way earlier than most people think, usually with 5 or 6 minutes left. 
+						Mathematically, it’s optimal. The chance of conceding an empty-net goal increases, but the upside (scoring while 6-on-5) is worth it when you’re losing anyway.
+						It’s just a skewed payoff: you’re trading a slightly worse loss for a decent shot at a win. A basic expected value argument.
+					</p>
+					<p style="color: black; font-size: 25px; font-family:'Times New Roman', Times, serif;">
+						But almost no coach does it. Why? Because when it doesn’t work, you look stupid. You lose 4–1 instead of 2–1 and take heat for being "too aggressive," even if the math backed you.
+						It’s a good reminder that expected value isn’t always what gets optimized, career risk often dominates statistical logic. In theory, loss is loss; in practice, how you lose matters.
+						The paper doesn’t lean hard into the math, but the intuition is a nice example of dynamic programming under pressure, optimizing a control variable (when to pull) given asymmetric downside perception.
+					</p>
+					<p style="color: black; font-size: 25px; font-family:'Times New Roman', Times, serif;">
+						I liked it because it’s not just about hockey, it’s about making uncomfortable decisions when you know they’re right. The world’s full of late goalie pulls.
+					</p>
+										<p style="color: black; font-size: 35px; font-family:'Times New Roman', Times, serif;">
+											Maximize EV, not approval. Pull the goalie. (But don't blame me when you get fired :) )</p>
+				</article>
 
-            <p style="color: black;">
-                The basic idea is to extend the classic RNN by allowing the model to “remember” values over longer distances in the sequence. 
-                Regular RNNs suffer from vanishing gradients, which limits how far back they can effectively retain signal. 
-                LSTMs add gates (input, forget, output) to help manage this, selectively retaining or discarding values based on learned weights. 
-                It’s clever and not too hard to implement once you read through the equations.
-            </p>
-
-            <p style="color: black;">
-                I mostly focused on the time series side. I looked at a few examples of LSTMs being used for financial forecasting, not necessarily because I think they’re the best model for it, 
-                but because the framing is familiar. In one toy example, an LSTM was trained to predict stock returns based on price history. 
-                The results weren’t magical, but you can see how the structure makes sense: memory over prior days, conditional on sequence, not just raw features.
-            </p>
-
-            <p style="color: black;">
-                I’m not jumping to use LSTMs in anything right now, but it was a good reminder of how much mileage you can get out of relatively old architectures. 
-                They're still widely used in domains where data is inherently sequential and attention models are overkill or hard to train.
-            </p>
-
-            <p style="color: black;">
-                I’ll probably look at GRUs next, and eventually some of the hybrid models people use in forecasting competitions. 
-                Not sure if LSTMs will show up in anything I do soon, but they’re a good tool to have in the background.
-            </p>
-
-        </article>
-
-    </div>
-</section>
+			</div>
+		</section>
 
 
 						<!-- Footer -->
@@ -89,7 +77,7 @@
 										<section>
 											<header>
 												<h2>Join the mailing list</h2>
-												<!-- <p>I write a newsletter on silly stuff</p> -->
+												<p>I write a newsletter on silly stuff</p>
 											</header>
 											 <div class="container">
 												<form  action="https://formspree.io/f/mjvdgrwz"
@@ -143,7 +131,7 @@
 												</li>
 												<li>
 													<h3>Phone</h3>
-													<p>Seems a bit personal dunnit?</p>
+													<p>(000)-000-0000</p>
 												</li>
 											</ul>
 										</section>
