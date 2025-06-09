@@ -14622,22 +14622,96 @@ What are the possible ranks of ( A )?</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Visible-Market-Orders-Predict-Trader-Beliefs">Visible Market Orders Predict Trader Beliefs<a class="anchor-link" href="#Visible-Market-Orders-Predict-Trader-Beliefs">&#182;</a></h2><p>We estimate three belief distributions from the order book:</p>
+<p>We assume that:</p>
 <ul>
-<li><strong>Latent</strong>: what traders actually believe.</li>
-<li><strong>Filtered</strong>: what shows up as standing orders.</li>
-<li><strong>Rejection</strong>: how traders strategically place orders under spread and risk constraints.</li>
+<li>A latent belief distribution exists:<br>
+$$
+X \sim \text{Beta}(\alpha, \beta)
+$$</li>
+<li>This represents the full spectrum of trader beliefs over possible outcomes.</li>
 </ul>
-<p>Granger tests show:</p>
+<hr>
+<h3 id="1.-Filtered-Histogram-(Observed-Standing-Orders)">1. Filtered Histogram (Observed Standing Orders)<a class="anchor-link" href="#1.-Filtered-Histogram-(Observed-Standing-Orders)">&#182;</a></h3><ul>
+<li>We observe standing (unmatched) orders from the order book in a snapshot.</li>
+<li>We apply a wide price filter:
+$$
+[\text{midpoint} - \delta, \ \text{midpoint} + \delta]
+$$</li>
+<li><p>This creates a filtered dataset of visible standing orders.</p>
+</li>
+<li><p>We compute a histogram:
+$$
+\text{Density at } p_i = \frac{\text{Size}_i}{\sum \text{Size}}
+$$</p>
+</li>
+</ul>
+<hr>
+<h3 id="2.-Filtered-Beta-Fit-(Observed-Distribution)">2. Filtered Beta Fit (Observed Distribution)<a class="anchor-link" href="#2.-Filtered-Beta-Fit-(Observed-Distribution)">&#182;</a></h3><ul>
+<li>We treat the price histogram as a proxy for the <strong>filtered distribution</strong> of beliefs.</li>
+<li><p>We sample from this histogram and fit a Beta distribution:
+$$
+\hat{\alpha}_{\text{filt}}, \hat{\beta}_{\text{filt}} \leftarrow \texttt{scipy.stats.beta.fit()}
+$$</p>
+</li>
+<li><p>This filtered Beta approximates what we <em>observe</em> directly in the order book:
+$$
+\text{Filtered Beta: } \text{Beta}(\hat{\alpha}_{\text{filt}}, \hat{\beta}_{\text{filt}})
+$$</p>
+</li>
+</ul>
+<hr>
+<h3 id="3.-Rejection-Beta-(Latent-Distribution)">3. Rejection Beta (Latent Distribution)<a class="anchor-link" href="#3.-Rejection-Beta-(Latent-Distribution)">&#182;</a></h3><ul>
+<li>We assume that standing orders result from traders whose beliefs lie <strong>outside the bid-ask spread</strong>.</li>
+<li>The spread thus defines a <strong>rejection region</strong>:
+$$
+\text{Reject if } p \in [\text{best bid}, \text{best ask}]
+$$</li>
+<li><p>The observed filtered distribution is a <strong>truncated sample</strong> from the latent Beta.</p>
+</li>
+<li><p>To reverse this truncation, we build a sharpened "rejection" Beta:
+$$
+\hat{\alpha}_{\text{rej}} = \hat{\alpha}_{\text{filt}} \cdot s \cdot (1 + 0.1 \cdot I) \\
+\hat{\beta}_{\text{rej}} = \hat{\beta}_{\text{filt}} \cdot s \cdot (1 - 0.1 \cdot I)
+$$
+where:</p>
 <ul>
-<li><strong>Filtered and rejection beliefs predict future latent beliefs</strong> — meaning the visible part of the book contains real information about what traders privately believe.</li>
-<li><strong>Rejection behavior also predicts future filtered orders</strong> — showing that strategic placement shapes what becomes visible.</li>
+<li>$s = \min(30, \max(1.5, \frac{0.25}{\text{spread}}))$ controls sharpness</li>
+<li>$I = \left( \frac{\text{bid size}}{\text{total size}} - 0.5 \right) \cdot 2$ adjusts skew based on size imbalance</li>
 </ul>
-<p>In short, even though standing orders are filtered and strategic, they still help forecast what traders really think — and should be modeled together.</p>
-<h3 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h3><p>If a surge of high-priced standing buy orders appears (filtered belief shifts upward),<br>
-and those orders are placed with unusually sharp rejection patterns (tight spread, high skew),<br>
-then our model predicts that underlying trader beliefs (latent) will drift upward in future snapshots —<br>
-<strong>even if the current price hasn’t moved yet</strong>.</p>
+</li>
+<li><p>This gives us a candidate for the full latent distribution:
+$$
+\text{Rejection Beta: } \text{Beta}(\hat{\alpha}_{\text{rej}}, \hat{\beta}_{\text{rej}})
+$$</p>
+</li>
+</ul>
+<hr>
+<h3 id="4.-Time-Series-+-Granger-Causality">4. Time Series + Granger Causality<a class="anchor-link" href="#4.-Time-Series-+-Granger-Causality">&#182;</a></h3><ul>
+<li>We repeat this process over many snapshots.</li>
+<li><p>For each time $t$, extract:</p>
+<ul>
+<li>$p(t)$: Midpoint (price, i.e., latent mean)</li>
+<li>$m_{\text{obs}}(t)$: Truncated mean from histogram</li>
+<li>$c(t) = \hat{\alpha}_{\text{rej}} + \hat{\beta}_{\text{rej}}$</li>
+</ul>
+</li>
+<li><p>Fit a VAR($k$) model to these time series.</p>
+</li>
+<li><p>Run Granger causality tests:</p>
+<ul>
+<li>Does $m_{\text{obs}}(t-1)$ help predict $p(t)$?</li>
+<li>Does $c(t-1)$ help predict $p(t)$?</li>
+<li>Do price shifts lead $c(t)$?</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Interpretation">Interpretation<a class="anchor-link" href="#Interpretation">&#182;</a></h3><ul>
+<li><strong>Filtered Beta</strong> = What we observe directly in the book (truncated beliefs)</li>
+<li><strong>Rejection Beta</strong> = Inferred latent belief distribution</li>
+<li><strong>Concentration $c(t)$</strong> = Strength of consensus</li>
+<li>Granger tests: assess whether <strong>order book shape</strong> anticipates <strong>future market price changes</strong>.</li>
+</ul>
 
 </div>
 </div>
@@ -14688,6 +14762,22 @@ then our model predicts that underlying trader beliefs (latent) will drift upwar
 <li>All three directions <em>except</em> <code>mu_latent → mu_filtered</code> show Granger causality at the 10% level.</li>
 <li>The system is dynamically interconnected and can be modeled as such for forecasting.</li>
 </ul>
+<h2 id="Visible-Market-Orders-Predict-Trader-Beliefs">Visible Market Orders Predict Trader Beliefs<a class="anchor-link" href="#Visible-Market-Orders-Predict-Trader-Beliefs">&#182;</a></h2><p>We estimate three belief distributions from the order book:</p>
+<ul>
+<li><strong>Latent</strong>: what traders actually believe.</li>
+<li><strong>Filtered</strong>: what shows up as standing orders.</li>
+<li><strong>Rejection</strong>: how traders strategically place orders under spread and risk constraints.</li>
+</ul>
+<p>Granger tests show:</p>
+<ul>
+<li><strong>Filtered and rejection beliefs predict future latent beliefs</strong> — meaning the visible part of the book contains real information about what traders privately believe.</li>
+<li><strong>Rejection behavior also predicts future filtered orders</strong> — showing that strategic placement shapes what becomes visible.</li>
+</ul>
+<p>In short, even though standing orders are filtered and strategic, they still help forecast what traders really think — and should be modeled together.</p>
+<h3 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h3><p>If a surge of high-priced standing buy orders appears (filtered belief shifts upward),<br>
+and those orders are placed with unusually sharp rejection patterns (tight spread, high skew),<br>
+then our model predicts that underlying trader beliefs (latent) will drift upward in future snapshots —<br>
+<strong>even if the current price hasn’t moved yet</strong>.</p>
 
 </div>
 </div>
