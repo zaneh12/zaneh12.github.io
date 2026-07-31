@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MBS Hedging Primer</title>
+    <meta
+      name="description"
+      content="An instructional web app for agency MBS duration, swap hedging, and swaption overlays."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">Agency MBS / duration / convexity</p>
+          <div class="process-copy">
+            <p class="process-copy__title">Process</p>
+            <p class="lead">
+              Start with the mortgage position, measure its duration, offset it
+              with a pay-fixed swap, then test the position under a rate shock.
+              If the rally is large enough, a receiver swaption adds convexity
+              protection back into the book.
+            </p>
+            <ol class="process-list">
+              <li>Set the MBS position and its starting duration.</li>
+              <li>Set the swap hedge and the optional swaption overlay.</li>
+              <li>Move the rate shock and read the resulting duration and P&amp;L.</li>
+            </ol>
+          </div>
+        </div>
+
+        <aside class="summary-panel">
+          <div class="summary-panel__head">
+            <span class="eyebrow eyebrow--small">Position summary</span>
+            <p>Current hedge position and estimated P&amp;L for the selected move.</p>
+          </div>
+          <div class="summary-stats">
+            <div class="summary-stat">
+              <span>MBS DV01 today</span>
+              <strong id="currentMbsDv01">$0.00 mm / bp</strong>
+            </div>
+            <div class="summary-stat">
+              <span>Swap DV01 today</span>
+              <strong id="currentSwapDv01">$0.00 mm / bp</strong>
+            </div>
+            <div class="summary-stat summary-stat--accent">
+              <span>Net DV01 today</span>
+              <strong id="currentNetDv01">$0.00 mm / bp</strong>
+            </div>
+            <div class="summary-stat">
+              <span>Estimated P&amp;L</span>
+              <strong id="estimatedPnl">$0.00 mm</strong>
+            </div>
+          </div>
+        </aside>
+      </header>
+
+      <section class="panel section--definitions">
+        <div class="section-head">
+          <p class="eyebrow eyebrow--small">Definitions</p>
+          <h2>Core terms used in the model.</h2>
+        </div>
+        <div class="definition-list">
+          <div class="definition-row">
+            <h3>Duration</h3>
+            <p>The approximate price sensitivity of a bond to a small change in yield.</p>
+          </div>
+          <div class="definition-row">
+            <h3>DV01</h3>
+            <p>The dollar change in market value for a one basis point move in rates.</p>
+          </div>
+          <div class="definition-row">
+            <h3>Convexity</h3>
+            <p>The feature that causes duration to change as rates move. Mortgage securities exhibit negative convexity.</p>
+          </div>
+          <div class="definition-row">
+            <h3>Pay-fixed swap</h3>
+            <p>An interest rate swap used to reduce long duration exposure in a mortgage portfolio.</p>
+          </div>
+          <div class="definition-row">
+            <h3>Receiver swaption</h3>
+            <p>An option that gives the holder the right to receive fixed on a swap at a future date.</p>
+          </div>
+          <div class="definition-row">
+            <h3>Refi wave</h3>
+            <p>A rise in refinancing activity after mortgage rates decline. This shortens MBS duration.</p>
+          </div>
+        </div>
+      </section>
+
+      <main class="workspace">
+        <section class="panel model-panel">
+          <div class="section-head">
+            <p class="eyebrow eyebrow--small">Position setup</p>
+            <h2>Specify the book, the hedge, and the rate shock.</h2>
+          </div>
+
+          <div class="control-grid">
+            <div class="control-section">
+              <h3>Mortgage position</h3>
+              <label>
+                <span>MBS market value</span>
+                <div class="input-wrap">
+                  <input id="mbsValue" type="number" min="0" step="10" value="500" />
+                  <span class="unit">mm</span>
+                </div>
+                <div class="slider-row">
+                  <input id="mbsValueRange" type="range" min="0" max="2000" step="10" value="500" />
+                </div>
+              </label>
+              <label>
+                <span>Starting effective duration</span>
+                <div class="input-wrap">
+                  <input id="baseDuration" type="number" min="0" step="0.1" value="5.5" />
+                  <span class="unit">yrs</span>
+                </div>
+                <div class="slider-row">
+                  <input id="baseDurationRange" type="range" min="1" max="9" step="0.1" value="5.5" />
+                </div>
+              </label>
+            </div>
+
+            <div class="control-section">
+              <h3>Interest rate hedge</h3>
+              <label>
+                <span>Pay-fixed swap notional</span>
+                <div class="input-wrap">
+                  <input id="swapNotional" type="number" min="0" step="10" value="700" />
+                  <span class="unit">mm</span>
+                </div>
+                <div class="slider-row">
+                  <input id="swapNotionalRange" type="range" min="0" max="2000" step="10" value="700" />
+                </div>
+              </label>
+              <label>
+                <span>Swap duration equivalent</span>
+                <div class="input-wrap">
+                  <input id="swapDuration" type="number" min="0" step="0.1" value="4.0" />
+                  <span class="unit">yrs</span>
+                </div>
+                <div class="slider-row">
+                  <input id="swapDurationRange" type="range" min="0.5" max="10" step="0.1" value="4.0" />
+                </div>
+              </label>
+              <label>
+                <span>Receiver swaption notional</span>
+                <div class="input-wrap">
+                  <input id="swaptionNotional" type="number" min="0" step="10" value="250" />
+                  <span class="unit">mm</span>
+                </div>
+                <div class="slider-row">
+                  <input id="swaptionNotionalRange" type="range" min="0" max="1000" step="10" value="250" />
+                </div>
+              </label>
+              <label class="toggle">
+                <input id="swaptionEnabled" type="checkbox" checked />
+                <span>Include receiver swaption overlay</span>
+              </label>
+            </div>
+
+            <div class="control-section control-section--shock">
+              <h3>Rate shock</h3>
+              <label class="shock-control">
+                <span>Selected shock</span>
+                <div class="input-wrap input-wrap--shock">
+                  <input id="rateShock" type="range" min="-150" max="150" step="5" value="-75" />
+                  <output id="rateShockOutput">-75 bp</output>
+                </div>
+              </label>
+              <div class="chip-row">
+                <button type="button" class="chip is-active" data-shock="-150">-150 bp</button>
+                <button type="button" class="chip" data-shock="-100">-100 bp</button>
+                <button type="button" class="chip" data-shock="-75">-75 bp</button>
+                <button type="button" class="chip" data-shock="-50">-50 bp</button>
+                <button type="button" class="chip" data-shock="0">0 bp</button>
+                <button type="button" class="chip" data-shock="50">+50 bp</button>
+                <button type="button" class="chip" data-shock="100">+100 bp</button>
+              </div>
+              <div class="selected-move">
+                <span>Selected shock</span>
+                <strong id="selectedShockLabel">-75 bp</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="narrative" id="marketNarrative" aria-live="polite"></div>
+
+          <details class="math-panel">
+            <summary>Show calculations</summary>
+            <div class="math-body">
+              <div class="math-card">
+                <h3>Current DV01</h3>
+                <p id="mathCurrentDv01">MBS DV01 = market value x duration / 10,000.</p>
+              </div>
+              <div class="math-card">
+                <h3>Net hedge</h3>
+                <p id="mathNetHedge">Net DV01 = MBS DV01 - swap DV01.</p>
+              </div>
+              <div class="math-card">
+                <h3>Duration after shock</h3>
+                <p id="mathDuration">Stressed duration is a simplified function of the rate shock.</p>
+              </div>
+              <div class="math-card">
+                <h3>Option overlay</h3>
+                <p id="mathSwaption">Swaption DV01 is added only after the rally passes the trigger.</p>
+              </div>
+              <div class="math-card">
+                <h3>Expected P&amp;L</h3>
+                <p id="mathPnl">Estimated P&amp;L = current net DV01 x selected shock.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="panel analysis-panel">
+          <div class="section-head">
+            <p class="eyebrow eyebrow--small">Results</p>
+            <h2>Inspect the resulting duration and DV01 paths.</h2>
+          </div>
+
+          <div class="result-strip">
+            <div class="result-item">
+              <span>Duration after shock</span>
+              <strong id="selectedDuration">0.00 yrs</strong>
+              <small id="selectedShockNote">Selected rate move for the scenario calculation.</small>
+            </div>
+            <div class="result-item">
+              <span>Swaption protection</span>
+              <strong id="swaptionBenefit">$0.00 mm / bp</strong>
+              <small id="swaptionNote">Incremental DV01 contributed by the option overlay.</small>
+            </div>
+            <div class="result-item">
+              <span>Hedge sign</span>
+              <strong id="hedgeState">Neutral</strong>
+              <small id="hedgeNote">Indicates whether the resulting book is long or short duration.</small>
+            </div>
+            <div class="result-item">
+              <span>Target gap</span>
+              <strong id="hedgeGap">$0.00 mm / bp</strong>
+              <small id="hedgeGapNote">Difference between the result and a flat duration target.</small>
+            </div>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-head">
+              <div>
+                <h3>Duration curve</h3>
+                <p>Estimated duration of the mortgage book across rate shocks.</p>
+              </div>
+              <div class="legend">
+                <span><i class="dot dot--solid"></i> Starting duration</span>
+                <span><i class="dot dot--warm"></i> Stressed duration</span>
+              </div>
+            </div>
+            <div id="durationChart" class="chart" aria-label="Duration curve chart"></div>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-head">
+              <div>
+                <h3>Net DV01 curve</h3>
+                <p>Net DV01 for the swap hedge alone and for the hedge plus swaption.</p>
+              </div>
+              <div class="legend">
+                <span><i class="dot dot--teal"></i> Swap only</span>
+                <span><i class="dot dot--amber"></i> Swap + option</span>
+              </div>
+            </div>
+            <div id="dv01Chart" class="chart" aria-label="Net DV01 curve chart"></div>
+          </div>
+
+          <div class="chart-block">
+            <div class="chart-head">
+              <div>
+                <h3>Selected shock stack</h3>
+                <p>Component contribution of the mortgage position, swap hedge, and option overlay.</p>
+              </div>
+            </div>
+            <div id="stackChart" class="stack-chart" aria-label="Selected shock component chart"></div>
+          </div>
+
+          <div class="table-block">
+            <div class="chart-head">
+              <div>
+                <h3>Scenario ladder</h3>
+                <p>Summary of duration and net DV01 across standard rate shocks.</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Shock</th>
+                    <th>Duration</th>
+                    <th>Net DV01</th>
+                    <th>Classification</th>
+                  </tr>
+                </thead>
+                <tbody id="scenarioRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <section class="footer-note">
+        <p>
+          The model is intended for instruction. It simplifies prepayments,
+          swap carry, and option pricing.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
