@@ -42,9 +42,10 @@
               With MBS, duration is not fixed, prepayments matter, and the thing you thought was neutral can become directional fast.
             </p>
             <div class="article-meta">
-              <a href="https://github.com/zaneh12/quant-reasoning" target="_blank" rel="noreferrer">See the code</a>
-              <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">Risk engine repo</a>
-              <a href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Paper</a>
+
+              <p class="code-note">
+                For the implementation side, see the <a href="mbs-hedging/index.html" target="_blank" rel="noreferrer">interactive example</a>, for the code, <a href="https://github.com/zaneh12/mbs-primer" target="_blank" rel="noreferrer">see the github</a>.
+              </p>
             </div>
           </div>
         </div>
@@ -140,7 +141,7 @@
         <div class="grid-2">
           <article class="card">
             <div class="card-inner prose">
-              <h2>The part I care about</h2>
+              <h2>Changes w.r.t path of rates</h2>
               <p>
                 The interesting bit is not just that duration changes, but that it changes in a way tied to the path of rates.
                 That means the hedge is always chasing a moving target.
@@ -160,7 +161,7 @@
 
           <article class="card">
             <div class="card-inner prose">
-              <h2>What I would track in code</h2>
+              <h2>Necessary elements</h2>
               <ul class="small-list">
                 <li>Coupon, seasoning, balance, and loan age.</li>
                 <li>Current curve, rate shocks, and volatility.</li>
@@ -172,7 +173,7 @@
                 The point is to make the hedge read itself as the book evolves, not just to print a number once.
               </p>
               <p class="code-note">
-                For the implementation side, see the <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">risk-engine repo</a>.
+                For the implementation side, see the <a href="mbs-hedging/index.html" target="_blank" rel="noreferrer">interactive example</a>.
               </p>
             </div>
           </article>
