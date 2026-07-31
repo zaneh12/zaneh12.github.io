@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MBS Hedging | Zane Hassoun</title>
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="article-page">
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark"></span> Zane Hassoun</a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="is-current"><a href="projects.html">Projects</a></li>
+          <li><a href="about-me.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://github.com/zaneh12" target="_blank" rel="noreferrer">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div class="kicker">MBS note</div>
+            <h1>When an MBS hedge stops behaving.</h1>
+            <p>
+              This is the fixed-income problem I want to think about here: a hedge that looks fine in one rate environment can stop looking like a hedge when the curve moves.
+              With MBS, duration is not fixed, prepayments matter, and the thing you thought was neutral can become directional fast.
+            </p>
+            <div class="article-meta">
+              <a href="https://github.com/zaneh12/quant-reasoning" target="_blank" rel="noreferrer">See the code</a>
+              <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">Risk engine repo</a>
+              <a href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Paper</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-inner prose">
+              <h2>A motivating example</h2>
+              <p>
+                Imagine a mortgage book with $100mm$ of current market value and an effective duration of $5.0$ years.
+                A simple first pass says the price sensitivity to a small rate change is roughly
+              </p>
+              <div class="equation">
+                $$\frac{\Delta P}{P} \approx -D_{\text{eff}}\,\Delta y + \frac{1}{2}C(\Delta y)^2$$
+              </div>
+              <p>
+                If rates move up by $100$ basis points, the linear approximation would suggest about a $5\%$ price hit before we even worry about convexity.
+                The catch is that MBS do not keep the same duration when rates move.
+              </p>
+              <p>
+                In a lower-rate world, borrowers refinance faster, prepayments speed up, and duration shortens.
+                When rates rise, the opposite happens: prepayment incentive fades, expected life extends, and the position can become much more rate-sensitive than the hedge that was put on yesterday.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner prose">
+              <h2>Why this matters</h2>
+              <p>
+                A lot of fixed-income hedging starts with a simple rule: match DV01. If the asset moves by one dollar for every one basis point change, size the hedge so the first-order exposure is neutral.
+              </p>
+              <div class="callout">
+                <p>
+                  The problem is that MBS duration is path dependent.
+                  Once rates move, the hedge ratio you liked at the start is no longer the hedge ratio you actually have.
+                </p>
+              </div>
+              <p>
+                That is why the job is less about writing down one perfect hedge and more about tracking how the hedge changes when the regime changes.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Scenario sketch</h2>
+          <p>A toy version of the problem.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Rate move</th>
+                <th>Prepay incentive</th>
+                <th>Effective duration</th>
+                <th>Hedge read</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Start</td>
+                <td>0 bp</td>
+                <td>Neutral</td>
+                <td>5.0</td>
+                <td>Hedge looks fine</td>
+              </tr>
+              <tr>
+                <td>Rates rise</td>
+                <td>+100 bp</td>
+                <td>Refi incentive falls</td>
+                <td>6.1</td>
+                <td>Asset gets longer, hedge can be too small</td>
+              </tr>
+              <tr>
+                <td>Rates fall</td>
+                <td>-100 bp</td>
+                <td>Refi incentive rises</td>
+                <td>3.4</td>
+                <td>Asset gets shorter, hedge can overshoot</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-inner prose">
+              <h2>The part I care about</h2>
+              <p>
+                The interesting bit is not just that duration changes, but that it changes in a way tied to the path of rates.
+                That means the hedge is always chasing a moving target.
+              </p>
+              <p>
+                One way to think about it is to monitor a hedge ratio that evolves with the book:
+              </p>
+              <div class="equation">
+                $$N_{\text{hedge}}(t) \approx \frac{DV01_{\text{MBS}}(t)}{DV01_{\text{hedge}}(t)}$$
+              </div>
+              <p>
+                If the MBS DV01 expands because duration extends, the hedge needs to follow.
+                If it does not, the position drifts into directional exposure.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner prose">
+              <h2>What I would track in code</h2>
+              <ul class="small-list">
+                <li>Coupon, seasoning, balance, and loan age.</li>
+                <li>Current curve, rate shocks, and volatility.</li>
+                <li>Refinance incentive and burnout.</li>
+                <li>Scenario DV01 and effective duration by path.</li>
+                <li>Hedge slippage when the rate regime changes.</li>
+              </ul>
+              <p>
+                The point is to make the hedge read itself as the book evolves, not just to print a number once.
+              </p>
+              <p class="code-note">
+                For the implementation side, see the <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">risk-engine repo</a>.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <div class="card-inner prose">
+            <h2>A small sketch of the engine</h2>
+            <p>
+              The code path does not need to be fancy to be useful. It needs to be explicit about the inputs, the shocks, and the hedge output.
+            </p>
+            <pre class="code-block"><code>inputs:
+  - pool coupon
+  - seasoning / age
+  - current curve
+  - rate shock grid
+  - prepayment assumptions
+
+for each scenario:
+  price = price_mbs(pool, curve, prepay_model)
+  dv01  = bump_and_reprice(price, curve, 1bp)
+  dur   = effective_duration(price, curve)
+  hedge = dv01 / dv01_hedge_instrument
+
+output:
+  scenario table
+  hedge ratio drift
+  warning when hedge flips stale</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <div class="card-inner prose">
+            <div class="article-meta">
+              <a href="projects.html">Back to projects</a>
+              <a href="https://github.com/zaneh12/quant-reasoning" target="_blank" rel="noreferrer">quant-reasoning</a>
+              <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">risk-engine</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer-space"></div>
+  </div>
+</body>
+</html>

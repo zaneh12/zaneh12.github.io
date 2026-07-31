@@ -1,402 +1,193 @@
-<!DOCTYPE HTML>
-<!--
-	Dopetrope by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Zane Hassoun</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="homepage is-preload">
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zane Hassoun</title>
+  <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark"></span> Zane Hassoun</a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li class="is-current"><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="about-me.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://github.com/zaneh12" target="_blank" rel="noreferrer">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
 
-			<!-- Header -->
-				<section id="header">
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div class="kicker">Zane Hassoun</div>
+            <h1>I'm Zane Hassoun.</h1>
+            <p>
+              I work on forecasting, market structure, and risk systems at Charles Schwab.
+              I completed a PhD in statistics at the University of York, and I still spend most of my time building things in code.
+              Lately I have been thinking a lot about fixed income hedging, especially MBS, and what happens when a long-duration hedge starts to look more like a short as rates move.
+            </p>
+            <div class="meta">
+              <a href="mbs.html">Check my thoughts on MBS hedging here</a>
+            </div>
+            <ul class="actions">
+              <li><a class="button primary" href="https://etheses.whiterose.ac.uk/id/eprint/38850/" target="_blank" rel="noreferrer">Thesis</a></li>
+              <li><a class="button" href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Paper</a></li>
+              <li><a class="button" href="projects.html">Projects</a></li>
+              <li><a class="button" href="about-me.html">About Me</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-					<!-- Logo -->
-						<h1><a href="index.html">Zane Hassoun</a></h1>
+      <section class="section">
+        <div class="section-head">
+          <h2>What I am working on</h2>
+          <p>The problems that keep showing up.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-inner">
+              <h3>A quick intro</h3>
+              <p class="article-lede">
+                I'm Zane. I work on forecasting, market structure, and risk systems.
+                I like the point where a view becomes a model, the model becomes code, and the code has to survive messy data, changing assumptions, and real use.
+              </p>
+              <p>
+                My background is in statistics and economics, and the work I keep coming back to is financial modeling, market problems, and building tools that stay useful after the first pass.
+                Right now that means fixed income hedging, MBS, and rate-driven scenarios where duration can change faster than the hedge.
+              </p>
+            </div>
+          </article>
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="index.html">Home</a></li>
-								<li> <a href="what-i-read.html">Recent Writing</a> </li>
-								<li><a href="about-me.html">About Me</a></li>
-								<li><a href="contact.html">Contact</a></li>
-							</ul>
-						</nav>
+          <article class="card">
+            <div class="card-inner">
+              <h3>Now</h3>
+              <ul class="plain-list">
+                <li>Risk and forecasting at Charles Schwab</li>
+                <li>Thinking about fixed income hedging and MBS</li>
+                <li>Keeping code and notes in public view</li>
+                <li>Building tools that need to survive rate moves</li>
+              </ul>
+              <div class="meta">
+                <a href="https://etheses.whiterose.ac.uk/id/eprint/38850/" target="_blank" rel="noreferrer">Thesis</a>
+                <a href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Paper</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
 
-					<!-- Banner -->
-						<section id="banner">
-							<header>
-								<h2>Welcome</h2>
-								<p>PhD Researcher in Statistics</p>
-							</header>
-						</section>
+      <section class="section">
+        <div class="section-head">
+          <h2>Projects</h2>
+          <p>Three projects that line up with how I think.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-inner profile">
+              <div class="tag-row">
+                <span class="tag">Forecasting</span>
+                <span class="tag"><a href="https://github.com/zaneh12/Kairosis" target="_blank" rel="noreferrer">Kairosis</a></span>
+              </div>
+              <h3>Forecasting</h3>
+              <p class="article-lede">
+                Dynamic aggregation, uncertainty, regime shifts.
+              </p>
+              <div class="meta">
+                <a href="https://github.com/zaneh12/Kairosis" target="_blank" rel="noreferrer">GitHub repo</a>
+                <a href="https://etheses.whiterose.ac.uk/id/eprint/38850/" target="_blank" rel="noreferrer">Thesis</a>
+              </div>
+            </div>
+          </article>
 
-					<!-- Intro -->
-						<section id="intro" class="container">
-							
-							<footer style="margin-top:30px">
-								<ul class="actions">
-									<li><a href="projects.html" class="button alt large">Research</a></li>
-									<li><a href="what-i-read.html" class="button large">What I Read This Week</a></li>
-									<!-- <li><a href="blog_1.html" class="button alt large">Blog</a></li> -->
+          <div class="stack">
+            <article class="card">
+              <div class="card-inner">
+                <div class="tag-row">
+                  <span class="tag">Systems</span>
+                  <span class="tag"><a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">risk-engine</a></span>
+                </div>
+                <h3>Systems</h3>
+                <p>
+                  Risk engines, tooling, and implementation.
+                </p>
+                <div class="meta">
+                  <a href="https://github.com/zaneh12/risk-engine" target="_blank" rel="noreferrer">GitHub repo</a>
+                  <a href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Paper</a>
+                </div>
+              </div>
+            </article>
 
-									<li><a onclick="openInNewTab('ZH_Professional_Resume.pdf');" class="button alt large">Resume</a></li>
+            <article class="card">
+              <div class="card-inner">
+                <div class="tag-row">
+                  <span class="tag">Fixed income</span>
+                  <span class="tag"><a href="https://github.com/zaneh12/quant-reasoning" target="_blank" rel="noreferrer">quant-reasoning</a></span>
+                </div>
+                <h3>Fixed income</h3>
+                <p>
+                  Hedging MBS, duration, and rate risk when the regime moves faster than the hedge.
+                </p>
+                <div class="meta">
+                  <a href="https://github.com/zaneh12/quant-reasoning" target="_blank" rel="noreferrer">GitHub repo</a>
+                  <a href="https://etheses.whiterose.ac.uk/id/eprint/38850/" target="_blank" rel="noreferrer">Thesis</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
 
-									
-								</ul>
-							</footer>
-						</section>
+      <section class="section">
+        <div class="section-head">
+          <h2>More work</h2>
+          <p>Links to the main artifacts.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-inner">
+              <h3>Thesis</h3>
+              <p>
+                The full doctoral thesis in White Rose.
+              </p>
+              <div class="meta">
+                <a href="https://etheses.whiterose.ac.uk/id/eprint/38850/" target="_blank" rel="noreferrer">Open thesis</a>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-inner">
+              <h3>Paper</h3>
+              <p>
+                Kairosis on arXiv.
+              </p>
+              <div class="meta">
+                <a href="https://arxiv.org/abs/2408.00785" target="_blank" rel="noreferrer">Open paper</a>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-inner">
+              <h3>GitHub</h3>
+              <p>
+                Main code and experiments.
+              </p>
+              <div class="meta">
+                <a href="https://github.com/zaneh12" target="_blank" rel="noreferrer">GitHub profile</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
 
-				</section>
-
-			<!-- Main -->
-				<section id="main">
-					<div class="container">
-						<div class="row">
-							<div class="col-12">
-									
-								<!-- Portfolio -->
-									<section>
-										<header class="major">
-											<h2>Research</h2>
-											<!-- <p> Borrowed the idea from Chamath Reads Substack</p> -->
-										</header>
-										<div class="row" style = " padding-bottom: 100px;">
-											<div class="col-12">
-												<section class="box" style="max-width: 800px; margin:  auto;">
-													<header>
-														<h3>Kairosis: A method for dynamical probability forecast aggregation informed by Bayesian change point detection</h3>
-													</header>
-													<p style="padding-bottom: 20px; color:black">In press at the International Journal of Forecasting</p>
-													
-													<a href="#" class="image featured"><img src="CMF_Trump_Single.png" alt="Paper Plot" style="width: 100%; height: auto;" /></a>
-													<footer>
-														<ul class="actions">
-															<li><a href="https://arxiv.org/abs/2408.00785" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-										<header class="major">
-											<h2>What I Read This Week</h2>
-											<!-- <p> Borrowed the idea from Chamath Reads Substack</p> -->
-										</header>
-										<div class="row">
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-														<a href="#" class="image featured">
-															<img src="max_ev.png" alt="" style="max-width: 400px; height: 400px; display: block; margin: 0 auto;" />
-													</a>
-													<header>
-														<h3>This Week</h3>
-													</header>
-													<p>Investment Lessons</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="what-i-read.html" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section>
-												</div>
-												<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/strategic.jpg" alt="" style="max-width: 400px; height: 400px; display: block; margin: 0 auto;" /></a>
-													<header>
-														<h3>Last Week</h3>
-													</header>
-													<p>Overconfidence</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="overconfidence.html" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section>
-												
-											</div>
-											<div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/The_LSTM_cell.png" alt="" style="max-width: 400px; height: 400px; display: block; margin: 0 auto;" /></a>
-													<header>
-														<h3>Last Week</h3>
-													</header>
-													<p>LSTM Models</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="LSTM_RNNs.html" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section>
-												
-											</div>
-											<!-- <div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/candles.jpeg" alt="" /></a>
-													<header>
-														<h3>Two Weeks Ago</h3>
-													</header>
-													<p>Mutually Exciting Hawkes Process</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="02_10_23.html" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section> -->
-												
-											<!-- </div> -->
-											
-											<!-- <div class="col-4 col-6-medium col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/badge-probability.png" alt="" style="width: 65%;" /></a>
-													<header>
-														<h3>Two Weeks Ago</h3>
-													</header>
-													<p>The Joys of Probability Theory</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="blog_1.html" class="button alt">Read</a></li>
-														</ul>
-													</footer>
-												</section>
-												
-											</div> -->
-											
-										</div>
-									</section>
-
-							</div>
-							<div class="col-12">
-
-								<!-- Blog -->
-									<section>
-										<header class="major">
-											<h2>Some Short Writing</h2>
-										</header>
-										<div class="row">
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/hmc.jpg" alt="" height = '300' /></a>
-													<header>
-														<h3>A Review of Hamiltonian Monte Carlo</h3>
-													</header>
-													<p>In this paper I will be discussing the Markov chain Monte Carlo (MCMC) method
-														known as Hamiltonian Monte Carlo. MCMC is a method of simulation that was
-														brought forward in a 1953 paper by Nicholas Metropolis to simulate ideal states
-														of molecules . In 1959, the concept was extended by Alder and Wainright by
-														creating a more deterministic outcome, which are now known as Hamiltonian
-														Dynamics. The selected literature that popularized Hamiltonian Monte Carlo was
-														developed by Duane, Kennedy, Pendleton and Roweth and published as ”Hybrid
-														Monte Carlo” and is col¬loquially referred to as ”HMC.” More recently, HMC
-														has entered into the realm of Bayesian Statistics; in 1996 Neal published a paper
-														applying HMC to neural networks To properly understand Hamiltonian Monte
-														Carlo and Hamiltonian Dynamics, it is imperative to have a thorough foundational
-														understanding of Monte Carlo simulations, Markov chains, Markov chain Monte
-														Carlo (MCMC) methods and various supporting algorithms such as, Metropolis-
-														Hastings, Random Walk etc).</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="Hassoun_Zane_Final_Paper.pdf" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="Hassoun_Zane_Project_1.html" class="image featured"><img src="images/BiPlot_Final.jpg" alt="" height="300" /></a>
-													<header>
-														<h3>Principal Component Analysis for College Majors</h3>
-														
-													</header>
-													<p>For 17–19-year-old students, a common problem arises when they begin to apply to university:
-														in what course are they to undertake further study? Generally, there is some guidance through
-														university counsellors, parents, peers, or mentors, but there is a swath of information available
-														and it is difficult to identify pertinent information and thus determine the most optimal route
-														to university entry . Beginning to define ”optimal” opens the door to significant nuance: Is the
-														student independently wealthy? Do career outcomes matter? Do they value money, over what they
-														enjoy? Do they have moral underpinnings that direct them to take on work that is meaningful?
-														The list is ad-infinitum. In an attempt to assist in determining a solution, this analysis seeks to
-														propose a guide for students that replaces the typical ”Major Category” utilized to begin one’s
-														search (i.e. Engineering, Physical Science, Arts, Humanities etc) and utilizes instead, clusters
-														of degrees based on different post-graduation employment statistics.
-													</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="Hassoun_Zane_Final_Project.pdf" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-									</section>
-									<!-- Forecast Animations -->
-									<section>
-										<header class="major">
-											<h2>Animations</h2>
-										</header>
-										<div class="row">
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/trump_funny.jpeg" alt="" height = '300' /></a>
-													<header>
-														<h3>Will Trump be the president of the US in 2019</h3>
-													</header>
-													<p>Animation Using Matplotlib</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="Trump.html" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/russia_cartoon.jpeg" alt="" height = '300' /></a>
-													<header>
-														<h3>Will Russia expand by means of military conflict before 2020</h3>
-													</header>
-													<p>Animation Using Matplotlib</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="russia_2020.html" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/brexit_cartoon.jpeg" alt="" height = '300' /></a>
-													<header>
-														<h3>Will Brexit negotiations be resolved by end of 2019</h3>
-													</header>
-													<p>Animation Using Matplotlib</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="Brexit.html" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-											<div class="col-6 col-12-small">
-												<section class="box">
-													<a href="#" class="image featured"><img src="images/nuclear_plant.jpeg" alt="" height = '300' /></a>
-													<header>
-														<h3>Will radical new low energy nuclear reaction tech be proven before 2019</h3>
-													</header>
-													<p>Animation Using Matplotlib</p>
-													<footer>
-														<ul class="actions">
-															<li><a href="nuclear-energy.html" class="button icon solid fa-file-alt">Continue Reading</a></li>
-														</ul>
-													</footer>
-												</section>
-											</div>
-										</div>
-									</section>
-
-							</div>
-						</div>
-					</div>
-				</section>
-
-			<!-- Footer -->
-				<section id="footer">
-					<div class="container">
-						<div class="row">
-							<div class="col-8 col-12-medium">
-								<section>
-									<header>
-										<h2>Join the mailing list</h2>
-										<p>I write a newsletter</p>
-									</header>
-									 <div class="container">
-										<form  action="https://formspree.io/f/mjvdgrwz"
-										method="POST">
-
-											<label for="fname" style="color:white">First Name</label>
-											<input type="text" id="fname" name="firstname" placeholder="Your name..">
-
-											<label for="lname" style="color:white">Last Name</label>
-											<input type="text" id="lname" name="lastname" placeholder="Your last name..">
-
-											<label for="email" style="color:white">Email</label>
-											<input type="text" id="lname" name="lastname" placeholder="Your Email Address..">
-											</select>
-
-											<label for="subject" style="color:white">Comments?</label>
-											<textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
-
-											<input type="submit" value="Submit" style="margin-top: 1em;">
-										</form>
-									</div> 
-									
-								</section>
-							</div>
-							
-							<div class="col-4 col-12-medium">
-								<section>
-									<header>
-										<h2>Socials</h2>
-									</header>
-									<ul class="social">
-										<li><a class="icon brands fa-facebook-f" onclick="openInNewTab('//www.corndog.io');"><span class="label">Facebook</span></a></li>
-										<li><a class="icon brands fa-twitter" onclick="openInNewTab('//www.corndog.io');"><span class="label">Twitter</span></a></li>
-										<li><a class="icon brands fa-github" onclick="openInNewTab('//www.github.com/zaneh12');"><span class="label">Dribbble</span></a></li>
-										<li><a class="icon brands fa-linkedin-in" onclick="openInNewTab('//www.linkedin.com/in/zanehassoun/');"><span class="label">LinkedIn</span></a></li>
-									</ul>
-									<ul class="contact">
-										<li>
-											<h3>Address</h3>
-											<p>
-												University of York <br />
-												Dept of Mathematics <br />
-												James College, Campus West <br />
-												YO10 5DD<br/>
-												United Kingdom
-											</p>
-										</li>
-										<li>
-											<h3>Email</h3>
-											<p><a href="#">firstname.lastname@york.ac.uk</a></p>
-										</li>
-										<li>
-											<h3>Phone</h3>
-											<p></p>
-										</li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-12">
-
-								<!-- Copyright -->
-									<div id="copyright">
-										<ul class="links">
-											<li>&copy; Zane Hassoun. All rights reserved.</li>
-										</ul>
-									</div>
-
-							</div>
-						</div>
-					</div>
-				</section>
-
-		</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    <div class="footer-space"></div>
+  </div>
+</body>
 </html>
