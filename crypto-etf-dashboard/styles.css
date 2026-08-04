@@ -1,0 +1,328 @@
+.crypto-page .crypto-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(290px, 0.72fr);
+  gap: 1.2rem;
+}
+
+.crypto-page .crypto-hero__copy {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.crypto-page .crypto-hero p {
+  max-width: 64ch;
+}
+
+.crypto-page .crypto-intro {
+  color: var(--muted);
+}
+
+.crypto-page .math-inline {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  color: var(--text);
+}
+
+.crypto-page .crypto-summary {
+  padding: 1.05rem;
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+}
+
+.crypto-page .summary-panel__head {
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.crypto-page .snapshot-title {
+  margin: 0 0 0.2rem;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.crypto-page .snapshot-subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.crypto-page .crypto-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.crypto-page .control-field {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 0.9rem;
+}
+
+.crypto-page .control-field span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.crypto-page select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.crypto-page .control-note {
+  margin: 0.4rem 0 1rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(31, 78, 121, 0.05);
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.crypto-page .chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.crypto-page .chip {
+  padding: 0.38rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font: 600 0.86rem "Helvetica Neue", Helvetica, Arial, sans-serif;
+  cursor: pointer;
+}
+
+.crypto-page .chip:hover,
+.crypto-page .chip:focus-visible {
+  border-color: var(--line-strong);
+}
+
+.crypto-page .chip.is-active {
+  background: rgba(31, 78, 121, 0.08);
+  border-color: rgba(31, 78, 121, 0.28);
+  color: var(--accent);
+}
+
+.crypto-page .selected-move {
+  margin-top: 0.7rem;
+}
+
+.crypto-page .selected-move span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.84rem;
+  margin-bottom: 0.15rem;
+}
+
+.crypto-page .selected-move strong {
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 1.05rem;
+}
+
+.crypto-page .crypto-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.crypto-page .mini-card {
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+}
+
+.crypto-page .mini-card strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: "IBM Plex Serif", Georgia, serif;
+}
+
+.crypto-page .mini-card span {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.crypto-page .chart-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.crypto-page .chart-card {
+  overflow: hidden;
+}
+
+.crypto-page .chart-head h3 {
+  margin-bottom: 0.35rem;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-size: 1.04rem;
+}
+
+.crypto-page .chart-head p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.crypto-page .chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.crypto-page .chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.crypto-page .chart-surface {
+  fill: #fff;
+  stroke: var(--line);
+}
+
+.crypto-page .chart-grid {
+  stroke: rgba(16, 24, 32, 0.08);
+  stroke-width: 1;
+}
+
+.crypto-page .chart-axis,
+.crypto-page .chart-label {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.crypto-page .chart-zero {
+  stroke: rgba(16, 24, 32, 0.22);
+  stroke-width: 1.1;
+  stroke-dasharray: 6 6;
+}
+
+.crypto-page .chart-focus {
+  stroke: rgba(31, 78, 121, 0.5);
+  stroke-width: 1.4;
+  stroke-dasharray: 6 6;
+}
+
+.crypto-page .chart-series--primary {
+  stroke: var(--accent);
+}
+
+.crypto-page .chart-series--secondary {
+  stroke: var(--accent-2);
+}
+
+.crypto-page .chart-series--tertiary {
+  stroke: var(--accent-3);
+}
+
+.crypto-page .chart-fill {
+  fill: rgba(31, 78, 121, 0.08);
+}
+
+.crypto-page .chart-bar {
+  fill: rgba(31, 78, 121, 0.45);
+}
+
+.crypto-page .chart-bar--selected {
+  fill: rgba(31, 78, 121, 0.82);
+}
+
+.crypto-page .stack-chart {
+  width: 100%;
+}
+
+.crypto-page .waterfall-row {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr) 120px;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.crypto-page .waterfall-row + .waterfall-row {
+  margin-top: 0.65rem;
+}
+
+.crypto-page .waterfall-label {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.crypto-page .waterfall-track {
+  position: relative;
+  min-height: 18px;
+  border-radius: 999px;
+  background: #f1ede4;
+  overflow: hidden;
+}
+
+.crypto-page .waterfall-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(16, 24, 32, 0.24);
+}
+
+.crypto-page .waterfall-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+}
+
+.crypto-page .waterfall-fill--positive {
+  background: linear-gradient(90deg, rgba(31, 78, 121, 0.28), rgba(31, 78, 121, 0.9));
+}
+
+.crypto-page .waterfall-fill--negative {
+  background: linear-gradient(90deg, rgba(161, 76, 86, 0.28), rgba(161, 76, 86, 0.9));
+}
+
+.crypto-page .waterfall-value {
+  text-align: right;
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 0.92rem;
+}
+
+.crypto-page .waterfall-row--emphasis .waterfall-label,
+.crypto-page .waterfall-row--emphasis .waterfall-value {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.crypto-page .article-meta {
+  margin-top: 0.5rem;
+}
+
+.crypto-page .article-meta a {
+  font-weight: 700;
+}
+
+.crypto-page .error-note {
+  color: var(--red);
+}
+
+@media (max-width: 960px) {
+  .crypto-page .crypto-hero,
+  .crypto-page .crypto-mini-grid,
+  .crypto-page .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .crypto-page .waterfall-row {
+    grid-template-columns: 1fr;
+  }
+
+  .crypto-page .waterfall-value {
+    text-align: left;
+  }
+}

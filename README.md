@@ -16,6 +16,7 @@ It focuses on:
 - `projects.html` - selected projects and links
 - `about-me.html` - background, work, and interests
 - `mbs.html` - first article / notes on MBS hedging
+- `crypto-etf-dashboard/index.html` - standalone crypto ETF hedge note
 - `contact.html` - contact links
 
 ## Notes

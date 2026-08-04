@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crypto ETF Hedge Note | Zane Hassoun</title>
+  <link rel="stylesheet" href="../assets/css/site.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="article-page crypto-page">
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="../index.html"><span class="brand-mark"></span> Zane Hassoun</a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li class="is-current"><a href="../projects.html">Projects</a></li>
+          <li><a href="../about-me.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://github.com/zaneh12" target="_blank" rel="noreferrer">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-inner crypto-hero">
+            <div class="crypto-hero__copy">
+              <div class="kicker">Crypto ETF note</div>
+              <h1>Hedging a crypto ETF is mostly beta, basis, and timing.</h1>
+              <p>
+                This page uses a vanilla crypto ETF as the example and keeps the point narrow:
+                if I am long the ETF, how much of the underlying coin should I short, where does the
+                residual P&amp;L come from, and how quickly does that hedge drift when the market moves?
+              </p>
+              <p class="crypto-intro">
+                The charts are the main artifact. The math underneath is simple on purpose:
+                <span class="math-inline">Hedge notional &asymp; &beta;<sub>30d</sub> &times; ETF market value</span>,
+                then we watch what remains after beta and basis are stripped out.
+              </p>
+            </div>
+
+            <aside class="crypto-summary">
+              <div class="summary-panel__head">
+                <p class="eyebrow eyebrow--small">Live snapshot</p>
+                <p class="snapshot-title" id="snapshotTitle">IBIT / BTC-USD</p>
+                <p class="snapshot-subtitle" id="snapshotSubtitle">Selected ETF and underlying comparison.</p>
+              </div>
+              <div class="summary-stats crypto-stats">
+                <div class="summary-stat">
+                  <span>ETF close</span>
+                  <strong id="etfClose">$0.00</strong>
+                </div>
+                <div class="summary-stat">
+                  <span>Benchmark close</span>
+                  <strong id="benchClose">$0.00</strong>
+                </div>
+                <div class="summary-stat">
+                  <span>30D beta</span>
+                  <strong id="beta30">0.00</strong>
+                </div>
+                <div class="summary-stat">
+                  <span>60D beta</span>
+                  <strong id="beta60">0.00</strong>
+                </div>
+                <div class="summary-stat">
+                  <span>Tracking spread</span>
+                  <strong id="trackingSpread">0.0 pts</strong>
+                </div>
+                <div class="summary-stat">
+                  <span>Residual vol</span>
+                  <strong id="residualVol">0.0%</strong>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Setup</h2>
+          <p>One ETF, one benchmark, one hedge ratio.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-inner crypto-controls">
+              <div class="tag-row">
+                <span class="tag">Controls</span>
+              </div>
+              <label class="control-field">
+                <span>ETF</span>
+                <select id="tickerSelect" aria-label="Select ETF ticker">
+                  <option value="IBIT" selected>IBIT</option>
+                  <option value="FBTC">FBTC</option>
+                  <option value="BITB">BITB</option>
+                  <option value="ARKB">ARKB</option>
+                  <option value="ETHA">ETHA</option>
+                </select>
+              </label>
+              <label class="control-field">
+                <span>Window</span>
+                <select id="rangeSelect" aria-label="Select chart range">
+                  <option value="6mo">6 months</option>
+                  <option value="1y" selected>1 year</option>
+                  <option value="2y">2 years</option>
+                </select>
+              </label>
+              <label class="control-field">
+                <span>Hedge lookback</span>
+                <select id="betaWindowSelect" aria-label="Select rolling beta window">
+                  <option value="20">20 days</option>
+                  <option value="30" selected>30 days</option>
+                  <option value="60">60 days</option>
+                </select>
+              </label>
+              <label class="control-field">
+                <span>ETF position size</span>
+                <div class="input-wrap">
+                  <input id="positionSize" type="number" min="1" step="1" value="1000000" />
+                  <span class="unit">USD</span>
+                </div>
+              </label>
+              <div class="control-field">
+                <span>Scenario</span>
+                <div class="chip-row" id="shockChips">
+                  <button type="button" class="chip" data-shock="-10">-10%</button>
+                  <button type="button" class="chip" data-shock="-5">-5%</button>
+                  <button type="button" class="chip" data-shock="0">0%</button>
+                  <button type="button" class="chip is-active" data-shock="5">+5%</button>
+                  <button type="button" class="chip" data-shock="10">+10%</button>
+                </div>
+                <div class="selected-move">
+                  <span>Selected benchmark shock</span>
+                  <strong id="selectedShockLabel">+5%</strong>
+                </div>
+              </div>
+              <div class="control-note">
+                Short the benchmark with the beta-adjusted notional. That keeps the note focused on
+                one question: does the hedge actually reduce the move, or does the wrapper leave a
+                measurable leftover?
+              </div>
+              <button id="refreshButton" class="button" type="button">Refresh data</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-inner prose">
+              <div class="tag-row">
+                <span class="tag">Hedging math</span>
+              </div>
+              <h3>What the hedge is doing</h3>
+              <p>
+                The first pass is not complicated. Estimate the ETF's beta to the coin over a rolling
+                window, map the ETF dollar exposure into benchmark units, and measure the leftover after
+                the hedge.
+              </p>
+              <div class="equation">
+                $$N_{\text{hedge}} \approx \beta_{k}\cdot \frac{V_{\text{ETF}}}{P_{\text{coin}}}$$
+              </div>
+              <p>
+                If the ETF beta slips below one, the hedge is too large.
+                If the beta rises, the hedge is too small.
+                Either way, the thing that matters is the residual, not the headline beta.
+              </p>
+              <div class="crypto-mini-grid">
+                <div class="mini-card">
+                  <strong>Basis</strong>
+                  <span>ETF return minus benchmark return.</span>
+                </div>
+                <div class="mini-card">
+                  <strong>Residual</strong>
+                  <span>What remains after the hedge is applied.</span>
+                </div>
+                <div class="mini-card">
+                  <strong>Drift</strong>
+                  <span>How quickly the hedge ratio moves across windows.</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Charts</h2>
+          <p>Price, beta, basis, and the hedged P&amp;L ladder.</p>
+        </div>
+        <div class="chart-stack">
+          <article class="card chart-card">
+            <div class="card-inner">
+              <div class="chart-head">
+                <div>
+                  <h3>Price and trend</h3>
+                  <p>ETF versus the underlying coin, with short and medium moving averages on the ETF.</p>
+                </div>
+              </div>
+              <div id="priceChart" class="chart" aria-label="Price chart"></div>
+            </div>
+          </article>
+
+          <div class="grid-2">
+            <article class="card chart-card">
+              <div class="card-inner">
+                <div class="chart-head">
+                  <div>
+                    <h3>Rolling beta</h3>
+                    <p>How much ETF return you get for one unit of benchmark return.</p>
+                  </div>
+                </div>
+                <div id="betaChart" class="chart" aria-label="Rolling beta chart"></div>
+              </div>
+            </article>
+
+            <article class="card chart-card">
+              <div class="card-inner">
+                <div class="chart-head">
+                  <div>
+                    <h3>Basis / spread</h3>
+                    <p>ETF normalized price minus benchmark normalized price.</p>
+                  </div>
+                </div>
+                <div id="basisChart" class="chart" aria-label="Basis chart"></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid-2">
+            <article class="card chart-card">
+              <div class="card-inner">
+                <div class="chart-head">
+                  <div>
+                    <h3>Drawdown</h3>
+                    <p>ETF drawdown against the benchmark drawdown over the same window.</p>
+                  </div>
+                </div>
+                <div id="drawdownChart" class="chart" aria-label="Drawdown chart"></div>
+              </div>
+            </article>
+
+            <article class="card chart-card">
+              <div class="card-inner">
+                <div class="chart-head">
+                  <div>
+                    <h3>Hedge ladder</h3>
+                    <p>ETF P&amp;L, benchmark hedge, and residual across simple benchmark shocks.</p>
+                  </div>
+                </div>
+                <div id="hedgeChart" class="stack-chart" aria-label="Hedge ladder chart"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Scenario table</h2>
+          <p>Standardized moves so the hedge can be read quickly.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Benchmark move</th>
+                <th>ETF move</th>
+                <th>Hedge P&amp;L</th>
+                <th>Residual</th>
+                <th>Read</th>
+              </tr>
+            </thead>
+            <tbody id="scenarioRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <div class="card-inner prose">
+            <h3>Working notes</h3>
+            <p id="dataNote">
+              Live chart data loads when the endpoint is available. If not, the page falls back to a local series so the note still opens cleanly.
+            </p>
+            <pre class="code-block"><code>Hedge notional   ≈ beta(window) × ETF market value
+ETF move         ≈ beta × benchmark move + residual
+Residual P&amp;L     = ETF P&amp;L - hedge P&amp;L
+
+The point of the page is to see when the residual is small and when the wrapper itself is the thing driving the book.</code></pre>
+            <div class="article-meta">
+              <a href="../projects.html">Back to projects</a>
+              <a href="../mbs.html">MBS note</a>
+              <a href="https://github.com/zaneh12" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer-space"></div>
+  </div>
+</body>
+</html>
